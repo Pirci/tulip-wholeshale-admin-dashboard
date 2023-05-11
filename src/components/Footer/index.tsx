@@ -1,5 +1,5 @@
-import './index.css';
+import styles from './index.module.scss';
 
 export default function Footer() {
-  return <div className="footer-container">i am footer</div>;
+  return <div className={styles.main_container}>i am footer</div>;
 }

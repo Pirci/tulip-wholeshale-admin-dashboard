@@ -1,7 +1,11 @@
-import './index.css';
+import styles from './index.module.scss';
 
 function Header() {
-  return <div className="header-container">i am header</div>;
+  return (
+    <div className={styles.main_container}>
+      <p>i am header</p>
+    </div>
+  );
 }
 
 export default Header;
