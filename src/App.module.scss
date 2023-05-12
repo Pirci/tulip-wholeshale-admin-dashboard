@@ -1,5 +1,16 @@
-.app_container{
-    width: 100vw;
-    height: 100vh;
-    background-color: cadetblue;
+.app_container {
+  width: 100vw;
+  height: 100vh;
+  background-color: cadetblue;
+  display: flex;
+  flex-direction: column;
+  .header_container {
+    width: 100%;
+  }
+  .content_container {
+    flex: 1;
+  }
+  .footer_container {
+    width: 100%;
+  }
 }

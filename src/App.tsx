@@ -1,12 +1,16 @@
-import styles from './App.module.scss'
-import Header from './components/Header';
-import Footer from './components/Footer';
+import styles from './App.module.scss';
+import Content from './components/Layout/Content';
+import Header from './components/Layout/Header';
 
 function App() {
   return (
     <div className={styles.app_container}>
-      <Header />
-      <Footer />
+      <div className={styles.header_container}>
+        <Header />
+      </div>
+      <div className={styles.content_container}>
+        <Content />
+      </div>
     </div>
   );
 }
