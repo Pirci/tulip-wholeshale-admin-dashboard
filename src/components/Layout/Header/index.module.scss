@@ -1,9 +1,12 @@
 .main_container{
     width: 100%;
-    background-color: #3b4045;
+    background-color: #537188;
+    
     .wrapper{
         display: flex;
         flex-direction: row;
         padding: 0.5em 1em ;
+        align-items: center;
+        margin: 0;
     }
 }

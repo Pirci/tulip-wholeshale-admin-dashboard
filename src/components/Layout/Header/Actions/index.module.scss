@@ -1,0 +1,15 @@
+.header_container {
+  display: inline-block;
+
+  &_notification {
+   margin: 0 auto;
+
+   svg {
+    fill: #61dafb;
+   }
+  }
+
+  &_avatar {
+    width: 40px;
+  }
+}

@@ -8,13 +8,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from '@mui/material';
+} from "@mui/material";
 
-import React from 'react';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import React from "react";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function Content() {
   const [state, setState] = React.useState({
@@ -28,9 +28,9 @@ export default function Content() {
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
       ) {
         return;
       }
@@ -40,13 +40,13 @@ export default function Content() {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role="presentation"
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -59,7 +59,7 @@ export default function Content() {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -75,7 +75,7 @@ export default function Content() {
 
   return (
     <div>
-      {(['left', 'right', 'top', 'bottom'] as const).map((anchor) => {
+      {(["left", "right", "top", "bottom"] as const).map((anchor) => {
         return (
           <React.Fragment key={anchor}>
             <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
