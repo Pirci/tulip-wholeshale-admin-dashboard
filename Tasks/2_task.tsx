@@ -1,4 +1,4 @@
-// TASK-1
+// TASK-2
 // The project was prepared for the second task by adding the following libraries
 // -sass
 // -material-ui
