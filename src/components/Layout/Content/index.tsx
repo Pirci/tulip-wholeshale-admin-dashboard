@@ -1,14 +1,20 @@
-import Sidebar from "../Sidebar";
-import PageContainer from "../PageContainer";
-import styles from "./index.module.scss";
+import Sidebar from '../Sidebar';
+import PageContainer from '../PageContainer';
+import styles from './index.module.scss';
 
-export default function Content() {
+interface ContentProps {
+  onHandleClick: (val: string) => void;
+}
+
+export default function Content(props: ContentProps) {
+  const handleClick = (val: string) => {
+    props.onHandleClick(val);
+  };
+
   return (
     <div className={styles.main_container}>
-      <Sidebar />
-      {/* put your page component here */}
+      <Sidebar onHandleClick={(val) => handleClick(val)} />
       <PageContainer>
-        {/* Your page component */}
         <p>My page content</p>
       </PageContainer>
     </div>

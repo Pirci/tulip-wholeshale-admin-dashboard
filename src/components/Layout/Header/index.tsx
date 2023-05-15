@@ -3,12 +3,18 @@ import CenterComponent from './CenterComponent';
 import Logo from './Logo';
 import styles from './index.module.scss';
 
-function Header() {
+interface HeaderProps{
+  title: string;
+  subtitle?: string;
+}
+
+function Header(props: HeaderProps) {
+
   return (
-    <div className={styles.main_container}>
+    <div className={styles.main_container}> 
       <div className={styles.wrapper}>
         <Logo />
-        <CenterComponent />
+        <CenterComponent title={props.title} subtitle={props.subtitle}/>
         <Actions />
       </div>
     </div>
