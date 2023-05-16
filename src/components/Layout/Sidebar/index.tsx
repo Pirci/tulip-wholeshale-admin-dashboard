@@ -19,15 +19,16 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ShareIcon from '@mui/icons-material/Share';
 import styles from './index.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const menuItems = [
-  { text: 'Inbox', icon: <InboxIcon /> },
-  { text: 'Starred', icon: <StarIcon /> },
-  { text: 'Send email', icon: <OutboxIcon /> },
-  { text: 'Drafts', icon: <DraftsIcon /> },
-  { text: 'Important', icon: <PriorityHighIcon /> },
-  { text: 'Junk', icon: <DeleteForeverIcon /> },
-  { text: 'Shared', icon: <ShareIcon /> },
+  { text: 'Dashboard', icon: <PriorityHighIcon />, route: 'dashboard' },
+  { text: 'Orders', icon: <DraftsIcon />, route: 'orders' },
+  { text: 'Products', icon: <InboxIcon />, route: 'products' },
+  { text: 'Customers', icon: <StarIcon />, route: 'customers' },
+  { text: 'Vendors', icon: <OutboxIcon />, route: 'vendors' },
+  { text: 'Content', icon: <DeleteForeverIcon />, route: 'content' },
+  { text: 'Settings', icon: <ShareIcon />, route: 'settings' },
 ];
 
 const drawerWidth = 240;
@@ -85,9 +86,11 @@ interface SideProps {
 
 export default function Sidebar(props: SideProps) {
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
 
-  const handleClick = (text: string) => {
+  const handleClick = (text: string, route: string) => {
     props.onHandleClick(text);
+    navigate(route);
   };
 
   const handleToggleDrawer = () => {
@@ -113,12 +116,12 @@ export default function Sidebar(props: SideProps) {
         </DrawerHeader>
         <Divider />
         <List className={styles.main_container}>
-          {menuItems.map(({ text, icon }) => {
+          {menuItems.map(({ text, icon, route }) => {
             console.log(text);
             return (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
-                  onClick={() => handleClick(text)}
+                  onClick={() => handleClick(text, route)}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
