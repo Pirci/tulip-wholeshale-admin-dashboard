@@ -1,7 +1,7 @@
-export interface Porduct {
+export interface Product {
   productName: string;
   productCategory: string;
-  date: Date;
+  date: string;
   color: Color;
   price: number;
   amount: number;

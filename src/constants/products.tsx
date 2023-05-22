@@ -1,4 +1,6 @@
-export const products = [
+import { Product } from "../models/product";
+
+export const products: Product[] = [
   {
     productName: 'Red Tulip Bouquet',
     productCategory: 'Flowers',
@@ -63,7 +65,7 @@ export const products = [
     productName: 'Red and White Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-03',
-    color: 'red, white',
+    color: 'red',
     price: 14.99,
     amount: 30,
     vendor: 'Petals & Blooms',
@@ -75,7 +77,7 @@ export const products = [
     productName: 'Mixed Color Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-05',
-    color: 'red, yellow, pink, white',
+    color: 'red',
     price: 18.99,
     amount: 15,
     vendor: 'Rainbow Florals',
@@ -86,7 +88,7 @@ export const products = [
     productName: 'Purple Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-10',
-    color: 'purple',
+    color: 'pink',
     price: 13.99,
     amount: 25,
     vendor: 'Violet Gardens',
@@ -97,7 +99,7 @@ export const products = [
     productName: 'Orange Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-08',
-    color: 'orange',
+    color: 'pink',
     price: 12.99,
     amount: 35,
     vendor: 'Citrus Blossoms',
@@ -109,7 +111,7 @@ export const products = [
     productName: 'Black Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-12',
-    color: 'black',
+    color: 'blue',
     price: 24.99,
     amount: 10,
     vendor: 'Midnight Blooms',
