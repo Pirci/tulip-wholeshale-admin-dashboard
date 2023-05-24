@@ -6,8 +6,8 @@ interface CenterComponentProps {
 }
 
 export default function CenterComponent(props: CenterComponentProps) {
-  console.log(props.title);
-  console.log(props.subtitle);
+  // console.log(props.title);
+  // console.log(props.subtitle);
 
   return (
     <Box sx={{ width: '100%' }}>

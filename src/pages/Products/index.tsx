@@ -48,7 +48,7 @@ export default function Products() {
   changeArray2(studens as any);
 
   const handleClick = (val: string) => {
-    console.log(val);
+    // console.log(val);
     //extra operations
     setActiveView(val);
   };

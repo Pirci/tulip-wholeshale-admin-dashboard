@@ -117,7 +117,7 @@ export default function Sidebar(props: SideProps) {
         <Divider />
         <List className={styles.main_container}>
           {menuItems.map(({ text, icon, route }) => {
-            console.log(text);
+            // console.log(text);
             return (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton

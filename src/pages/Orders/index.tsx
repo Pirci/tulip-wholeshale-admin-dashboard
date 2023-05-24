@@ -16,7 +16,7 @@ export default function Orders() {
   // CAllback fonksiyonun prev değeri, fonksiyondan gelen önceki değeri kullanılacak
   const handleClick = () => {
     setCounter((old) => {
-      console.log(old + 1);
+      // console.log(old + 1);
       return old + 1;
     });
   };
