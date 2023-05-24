@@ -68,103 +68,123 @@ export const ProductEntryForm = (props: Props) => {
     <div className={styles.content_container}>
       <div className={styles.page_header}>Product Entry Form</div>
       <form className={styles.form_container}>
-        <TextField
-          id="outlined-basic-1"
-          label="Product Name"
-          variant="outlined"
-          value={formValues.productName}
-          onChange={(event) => handleChange('productName', event.target.value)}
-        />
-        <br></br>
-        <TextField
-          id="outlined-basic-2"
-          label="Category"
-          variant="outlined"
-          value={formValues.productCategory}
-          onChange={(event) =>
-            handleChange('productCategory', event.target.value)
-          }
-        />
-        <br></br>
-        <TextField
-          id="outlined-basic-4"
-          label="Price"
-          variant="outlined"
-          value={formValues.price}
-          onChange={(event) => handleChange('price', event.target.value)}
-        />
-        <br></br>
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-1'
+            label='Product Name'
+            variant='outlined'
+            value={formValues.productName}
+            onChange={(event: any) =>
+              handleChange('productName', event.target.value)
+            }
+          />
+        </div>
 
-        <TextField
-          id="outlined-basic-5"
-          label="Amount"
-          variant="outlined"
-          value={formValues.amount}
-          onChange={(event) => handleChange('amount', event.target.value)}
-        />
-        <br></br>
-        <TextField
-          id="outlined-basic-6"
-          label="Vendor"
-          variant="outlined"
-          value={formValues.vendor}
-          onChange={(event) => handleChange('vendor', event.target.value)}
-        />
-        <br></br>
-        <TextField
-          id="outlined-basic-7"
-          label="Availablity"
-          variant="outlined"
-          value={formValues.isStockAvailable}
-          onChange={(event) =>
-            handleChange('isStockAvailable', event.target.value)
-          }
-        />
-        <br></br>
-        <TextField
-          id="outlined-basic-8"
-          label="Demand Rating"
-          variant="outlined"
-          value={formValues.demandRating}
-          onChange={(event) => handleChange('demandRating', event.target.value)}
-        />
-        <br></br>
-        <FormControl>
-          <FormLabel id="demo-radio-buttons-group-label">Colors</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="blue"
-            name="radio-buttons-group"
-            onChange={handleRadioChange}
-          >
-            {colors.map((color) => {
-              return (
-                <FormControlLabel
-                  key={color.value}
-                  value={color.value}
-                  control={<Radio />}
-                  label={color.name}
-                />
-              );
-            })}
-          </RadioGroup>
-        </FormControl>
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-2'
+            label='Category'
+            variant='outlined'
+            value={formValues.productCategory}
+            onChange={(event: any) =>
+              handleChange('productCategory', event.target.value)
+            }
+          />
+        </div>
 
-        <button type="submit" onClick={handleClick}>
-          Submit
-        </button>
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-4'
+            label='Price'
+            variant='outlined'
+            value={formValues.price}
+            onChange={(event) => handleChange('price', event.target.value)}
+          />
+        </div>
+
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-5'
+            label='Amount'
+            variant='outlined'
+            value={formValues.amount}
+            onChange={(event) => handleChange('amount', event.target.value)}
+          />
+        </div>
+
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-6'
+            label='Vendor'
+            variant='outlined'
+            value={formValues.vendor}
+            onChange={(event) => handleChange('vendor', event.target.value)}
+          />
+        </div>
+
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-7'
+            label='Availablity'
+            variant='outlined'
+            value={formValues.isStockAvailable}
+            onChange={(event) =>
+              handleChange('isStockAvailable', event.target.value)
+            }
+          />
+        </div>
+
+        <div className={styles.form_field}>
+          <TextField
+            id='outlined-basic-8'
+            label='Demand Rating'
+            variant='outlined'
+            value={formValues.demandRating}
+            onChange={(event) =>
+              handleChange('demandRating', event.target.value)
+            }
+          />
+        </div>
+
+        <div className={styles.form_field}>
+          <FormControl>
+            <FormLabel id='demo-radio-buttons-group-label'>Colors</FormLabel>
+            <RadioGroup
+              aria-labelledby='demo-radio-buttons-group-label'
+              defaultValue='blue'
+              name='radio-buttons-group'
+              onChange={handleRadioChange}
+            >
+              {colors.map((color) => {
+                return (
+                  <FormControlLabel
+                    key={color.value}
+                    value={color.value}
+                    control={<Radio />}
+                    label={color.name}
+                  />
+                );
+              })}
+            </RadioGroup>
+          </FormControl>
+        </div>
+        <div className={styles.submit_button_container}>
+          <button type='submit' onClick={handleClick}>
+            Submit
+          </button>
+        </div>
       </form>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {toastState === 'success' ? (
           <Alert
             onClose={handleClose}
-            severity="success"
+            severity='success'
             sx={{ width: '100%' }}
           >
             This is a success message!
           </Alert>
         ) : (
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
             This is a error message!
           </Alert>
         )}

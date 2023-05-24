@@ -85,8 +85,23 @@ interface SideProps {
 }
 
 export default function Sidebar(props: SideProps) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const autoHideTimer = React.useRef<NodeJS.Timeout | null>(null);
+  const startAutoHideTimer = () => {
+    if (autoHideTimer.current) {
+      clearTimeout(autoHideTimer.current);
+    }
+    autoHideTimer.current = setTimeout(() => {
+      setOpen(false);
+    }, 3000);
+  };
+
+  const stopAutoHideTimer = () => {
+    if (autoHideTimer.current) {
+      clearTimeout(autoHideTimer.current);
+    }
+  };
 
   const handleClick = (text: string, route: string) => {
     props.onHandleClick(text);
@@ -94,13 +109,24 @@ export default function Sidebar(props: SideProps) {
   };
 
   const handleToggleDrawer = () => {
-    setOpen((prev) => !prev);
+    setOpen((prev) => {
+      if (!prev) {
+        startAutoHideTimer();
+      }
+      return !prev;
+    });
   };
+
+  React.useEffect(() => {
+    return () => {
+      stopAutoHideTimer();
+    };
+  }, []);
 
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         open={open}
         PaperProps={{
           style: {
@@ -108,6 +134,8 @@ export default function Sidebar(props: SideProps) {
             height: '100%',
           },
         }}
+        onMouseEnter={stopAutoHideTimer}
+        onMouseLeave={startAutoHideTimer}
       >
         <DrawerHeader>
           <IconButton onClick={handleToggleDrawer}>

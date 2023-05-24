@@ -54,7 +54,7 @@ export default function Products() {
   };
 
   return (
-    <div>
+    <div className={styles.page_container}>
       <div className={styles.button_container}>
         <button
           className={activeView === 'list' ? styles.active_button : ''}
