@@ -154,6 +154,7 @@ export const ProductEntryForm = (props: Props) => {
               defaultValue='blue'
               name='radio-buttons-group'
               onChange={handleRadioChange}
+              className={styles.radio_buttons}
             >
               {colors.map((color) => {
                 return (
@@ -168,12 +169,14 @@ export const ProductEntryForm = (props: Props) => {
             </RadioGroup>
           </FormControl>
         </div>
-        <div className={styles.submit_button_container}>
-          <button type='submit' onClick={handleClick}>
-            Submit
-          </button>
-        </div>
       </form>
+
+      <div className={styles.submit_button_container}>
+        <button type='submit' onClick={handleClick}>
+          Submit
+        </button>
+      </div>
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {toastState === 'success' ? (
           <Alert
