@@ -20,8 +20,8 @@ interface Student {
 }
 
 export default function Products() {
+  console.log('dbg-parent');
   const [activeView, setActiveView] = useState('list');
-
   // const renderContent = () => {
   //   if (activeView === 'list') {
   //     return <ProductList />;
@@ -71,6 +71,7 @@ export default function Products() {
         </button>
       </div>
       {/* <div>{renderContent()}</div> */}
+      <div></div>
       {activeView === 'list' ? <ProductList /> : <ProductEntryForm />}
     </div>
   );

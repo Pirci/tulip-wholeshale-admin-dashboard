@@ -13,7 +13,7 @@
 // of material ui library. Just put two types of notification. First toast notification is when the adding of a new product operation is 
 // successful and the second one is when it is failed due to a reason. 
 
-// Our third task should be designing an table component for products in hand. We will later put some filtering and sorting mechanism.
+// Our third task should be designing a table component for products in hand. We will later put some filtering and sorting mechanism.
 // But for now just put a dummy data that i provided to you in constants part. You can use material ui table component for this.
 
-// For now, do not spend time on server interaction, we wşll do it together.
+// For now, do not spend time on server interaction, we will do it together.
