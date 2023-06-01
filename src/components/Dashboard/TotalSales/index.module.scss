@@ -1,0 +1,139 @@
+.button_container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+  margin: 10px 50px;
+
+  &:hover {
+    background-color: orange;
+  }
+}
+
+.active_button {
+  background-color: #0056b3;
+}
+
+.page_header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.content_container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.product_list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .form_field {
+    flex: 0 0 100%;
+    padding-bottom: 2em;
+    text-align: center;
+
+    @media (min-width: 600px) {
+      // Tablet
+      flex: 0 0 50%;
+    }
+
+    @media (min-width: 900px) {
+      // Desktop
+      flex: 0 0 33.33%;
+    }
+
+    .form_field:nth-last-child(-n + 2) {
+      @media (min-width: 600px) {
+        flex: 0 0 50%;
+      }
+
+      @media (min-width: 900px) {
+        flex: 0 0 50%;
+      }
+    }
+
+    .radio_buttons {
+      display: flex;
+      flex-direction: row;
+
+      @media (max-width: 2400px) {
+        width: 550px;
+      }
+
+      @media (max-width: 1024px) {
+        width: 500px;
+      }
+
+      @media (max-width: 900px) {
+        width: 300px;
+        display: flex;
+        justify-content: center;
+      }
+
+      @media (max-width: 768px) {
+        width: 230px;
+        display: flex;
+        justify-content: center;
+      }
+
+      @media (max-width: 599px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  margin-left: 10px;
+}
+
+.submit_button_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button {
+    padding: 20px 250px;
+
+    @media (max-width: 900px) {
+      // Desktop
+      padding: 20px 150px;
+    }
+
+    @media (max-width: 600px) {
+      // Tablet
+      padding: 20px 50px;
+    }
+  }
+}
