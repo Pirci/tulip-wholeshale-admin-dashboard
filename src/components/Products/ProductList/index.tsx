@@ -9,17 +9,22 @@ import {
   TextField,
   TableFooter,
   TablePagination,
+  Button,
 } from '@mui/material';
 import styles from './index.module.scss';
 import { products } from '../../../constants/products';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 
 export const ProductList = () => {
+  //Lets do not do this
+  // console.log(document.getElementById('#outlined-basic-2').classList.add('my-awasome-class'));
+
   const [formValues, setFormValues] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [counter, setCounter] = useState(0);
+  const [clicked, setClicked] = useState(true);
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -38,6 +43,41 @@ export const ProductList = () => {
     console.log(formValue);
     setFormValues(formValue);
   };
+
+  // const callMe = (val: string) => {
+  //   return val.toUpperCase();
+  // };
+
+  const handleButtonClick = () => {
+    setClicked((prev) => {
+      return !prev;
+    });
+  };
+
+  // Invokes in each rerender
+  // useEffect(() => {
+  //   console.log(callMe('harun'));
+  // });
+
+  // Invokes only first render
+  // useEffect(() => {
+  //   console.log(callMe('harun'));
+  // }, []);
+
+  // Invokes selectively when the state in the array is changed
+  // useEffect(() => {
+  //   console.log(callMe('i am page'));
+  // }, [rowsPerPage]);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prev) => prev + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [clicked]);
 
   return (
     <div className={styles.content_container}>
@@ -119,6 +159,10 @@ export const ProductList = () => {
           </Table>
         </TableContainer>
       </div>
+      <Button variant="contained" onClick={handleButtonClick}>
+        click me
+      </Button>
+      <p>{counter}</p>
     </div>
   );
 };

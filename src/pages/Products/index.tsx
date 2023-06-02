@@ -20,7 +20,7 @@ interface Student {
 }
 
 export default function Products() {
-  console.log('dbg-parent');
+  // console.log('dbg-parent');
   const [activeView, setActiveView] = useState('list');
   // const renderContent = () => {
   //   if (activeView === 'list') {
