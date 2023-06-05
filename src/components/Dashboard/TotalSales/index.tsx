@@ -19,7 +19,7 @@ import { colors } from '../../../constants/colors';
 interface Props {}
 
 export const TotalSales = (props: Props) => {
-  console.log('dbg-child-2');
+  // console.log('dbg-child-2');
   const [first, setfirst] = useState(false);
   const [formValues, setFormValues] = useState({
     productName: '',

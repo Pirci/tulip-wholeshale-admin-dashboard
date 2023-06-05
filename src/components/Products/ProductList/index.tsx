@@ -9,22 +9,53 @@ import {
   TextField,
   TableFooter,
   TablePagination,
-  Button,
+  // Button,
 } from '@mui/material';
 import styles from './index.module.scss';
-import { products } from '../../../constants/products';
+// import { products } from '../../../constants/products';
 import React, { useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+
+interface Product {
+  productName: string;
+  date: string;
+  color: string;
+  price: number;
+  amount: number;
+  isStockAvailable: boolean;
+}
 
 export const ProductList = () => {
   //Lets do not do this
   // console.log(document.getElementById('#outlined-basic-2').classList.add('my-awasome-class'));
 
+  const [products, setProducts] = useState<Product[]>([]);
+
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/products');
+
+        // Check if the content type is JSON before trying to parse it.
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          console.log('No JSON data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Empty dependency array ensures this runs once on component mount.
   const [formValues, setFormValues] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [counter, setCounter] = useState(0);
-  const [clicked, setClicked] = useState(true);
+  // const [counter, setCounter] = useState(0);
+  // const [clicked, setClicked] = useState(true);
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -48,11 +79,11 @@ export const ProductList = () => {
   //   return val.toUpperCase();
   // };
 
-  const handleButtonClick = () => {
-    setClicked((prev) => {
-      return !prev;
-    });
-  };
+  // const handleButtonClick = () => {
+  //   setClicked((prev) => {
+  //     return !prev;
+  //   });
+  // };
 
   // Invokes in each rerender
   // useEffect(() => {
@@ -69,39 +100,39 @@ export const ProductList = () => {
   //   console.log(callMe('i am page'));
   // }, [rowsPerPage]);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prev) => prev + 1);
-    }, 1000);
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCounter((prev) => prev + 1);
+  //   }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [clicked]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [clicked]);
 
   return (
     <div className={styles.content_container}>
       <div className={styles.page_header}>List of Products</div>
       <div>
         <TextField
-          id="outlined-basic-2"
-          label="Search"
-          variant="outlined"
+          id='outlined-basic-2'
+          label='Search'
+          variant='outlined'
           value={formValues}
           onChange={(event: any) => handleChange(event.target.value)}
         />
       </div>
       <div>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell>Product Name</TableCell>
-                <TableCell align="right">date</TableCell>
-                <TableCell align="right">color</TableCell>
-                <TableCell align="right">price</TableCell>
-                <TableCell align="right">amount</TableCell>
-                <TableCell align="right">isStockAvailable</TableCell>
+                <TableCell align='right'>date</TableCell>
+                <TableCell align='right'>color</TableCell>
+                <TableCell align='right'>price</TableCell>
+                <TableCell align='right'>amount</TableCell>
+                <TableCell align='right'>isStockAvailable</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -123,14 +154,14 @@ export const ProductList = () => {
                   key={row.productName}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell component='th' scope='row'>
                     {row.productName}
                   </TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
-                  <TableCell align="right">{row.color}</TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align='right'>{row.date}</TableCell>
+                  <TableCell align='right'>{row.color}</TableCell>
+                  <TableCell align='right'>{row.price}</TableCell>
+                  <TableCell align='right'>{row.amount}</TableCell>
+                  <TableCell align='right'>
                     {row.isStockAvailable ? 'Exist' : 'Not Exist'}
                   </TableCell>
                 </TableRow>
@@ -159,10 +190,10 @@ export const ProductList = () => {
           </Table>
         </TableContainer>
       </div>
-      <Button variant="contained" onClick={handleButtonClick}>
+      {/* <Button variant='contained' onClick={handleButtonClick}>
         click me
-      </Button>
-      <p>{counter}</p>
+      </Button> */}
+      {/* <p>{counter}</p> */}
     </div>
   );
 };
