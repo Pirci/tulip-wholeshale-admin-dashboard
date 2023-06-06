@@ -1,6 +1,7 @@
 {
   "products": [
     {
+      "id": "1",
       "productName": "Red Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-01",
@@ -12,6 +13,7 @@
       "demandRating": 8
     },
     {
+      "id": "2",
       "productName": "Blue Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-04-25",
@@ -23,6 +25,7 @@
       "demandRating": 7
     },
     {
+      "id": "3",
       "productName": "Yellow Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-04-30",
@@ -34,6 +37,7 @@
       "demandRating": 6
     },
     {
+      "id": "4",
       "productName": "Pink Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-02",
@@ -45,6 +49,7 @@
       "demandRating": 9
     },
     {
+      "id": "5",
       "productName": "White Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-04-28",
@@ -56,6 +61,7 @@
       "demandRating": 7
     },
     {
+      "id": "6",
       "productName": "Red and White Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-03",
@@ -67,6 +73,7 @@
       "demandRating": 7
     },
     {
+      "id": "7",
       "productName": "Mixed Color Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-05",
@@ -78,6 +85,7 @@
       "demandRating": 8
     },
     {
+      "id": "8",
       "productName": "Purple Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-10",
@@ -89,6 +97,7 @@
       "demandRating": 7
     },
     {
+      "id": "9",
       "productName": "Orange Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-08",
@@ -100,6 +109,7 @@
       "demandRating": 6
     },
     {
+      "id": "10",
       "productName": "Black Tulip Bouquet",
       "productCategory": "Flowers",
       "date": "2023-05-12",
@@ -109,6 +119,345 @@
       "vendor": "Midnight Blooms",
       "isStockAvailable": true,
       "demandRating": 9
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "1234567890",
+      "address": "123 Main Street",
+      "level": "Silver"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "9876543210",
+      "address": "456 Elm Avenue",
+      "level": "Gold"
+    },
+    {
+      "id": "3",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "phone": "5551234567",
+      "address": "789 Oak Lane",
+      "level": "Bronze"
+    },
+    {
+      "id": "4",
+      "name": "Bob Anderson",
+      "email": "bob.anderson@example.com",
+      "phone": "7778889999",
+      "address": "321 Pine Road",
+      "level": "Gold"
+    },
+    {
+      "id": "5",
+      "name": "Emily Wilson",
+      "email": "emily.wilson@example.com",
+      "phone": "1112223333",
+      "address": "555 Cedar Street",
+      "level": "Silver"
+    },
+    {
+      "id": "6",
+      "name": "Michael Thompson",
+      "email": "michael.thompson@example.com",
+      "phone": "4445556666",
+      "address": "222 Maple Avenue",
+      "level": "Bronze"
+    },
+    {
+      "id": "7",
+      "name": "Sophia Brown",
+      "email": "sophia.brown@example.com",
+      "phone": "7774441111",
+      "address": "777 Oak Lane",
+      "level": "Silver"
+    },
+    {
+      "id": "8",
+      "name": "Oliver Martinez",
+      "email": "oliver.martinez@example.com",
+      "phone": "8885552222",
+      "address": "666 Pine Road",
+      "level": "Gold"
+    },
+    {
+      "id": "9",
+      "name": "Emma Davis",
+      "email": "emma.davis@example.com",
+      "phone": "9996663333",
+      "address": "999 Cedar Street",
+      "level": "Bronze"
+    },
+    {
+      "id": "10",
+      "name": "James Wilson",
+      "email": "james.wilson@example.com",
+      "phone": "3336669999",
+      "address": "111 Maple Avenue",
+      "level": "Gold"
+    },
+    {
+      "id": "11",
+      "name": "Ava Harris",
+      "email": "ava.harris@example.com",
+      "phone": "7779993333",
+      "address": "555 Elm Avenue",
+      "level": "Silver"
+    },
+    {
+      "id": "12",
+      "name": "Noah Taylor",
+      "email": "noah.taylor@example.com",
+      "phone": "8883336666",
+      "address": "222 Pine Road",
+      "level": "Bronze"
+    },
+    {
+      "id": "13",
+      "name": "Isabella Clark",
+      "email": "isabella.clark@example.com",
+      "phone": "5551117777",
+      "address": "888 Oak Lane",
+      "level": "Silver"
+    },
+    {
+      "id": "14",
+      "name": "Liam Lewis",
+      "email": "liam.lewis@example.com",
+      "phone": "9998887777",
+      "address": "444 Cedar Street",
+      "level": "Gold"
+    },
+    {
+      "id": "15",
+      "name": "Mia Turner",
+      "email": "mia.turner@example.com",
+      "phone": "6662224444",
+      "address": "777 Maple Avenue",
+      "level": "Bronze"
+    }
+  ],
+  "vendors": [
+    {
+      "id": "1",
+      "name": "Vendor 1",
+      "email": "vendor1@example.com",
+      "phone": "1234567890",
+      "address": "123 Main Street",
+      "product_availablity": "high",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "2",
+          "name": "Mixed Color Tulips",
+          "price": "15"
+        },
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Vendor 2",
+      "email": "vendor2@example.com",
+      "phone": "9876543210",
+      "address": "456 Elm Avenue",
+      "product_availablity": "medium",
+      "products_sold": [
+        {
+          "id": "2",
+          "name": "Mixed Color Tulips",
+          "price": "15"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Vendor 3",
+      "email": "vendor3@example.com",
+      "phone": "5551234567",
+      "address": "789 Oak Lane",
+      "product_availablity": "low",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Vendor 4",
+      "email": "vendor4@example.com",
+      "phone": "7778889999",
+      "address": "321 Pine Road",
+      "product_availablity": "high",
+      "products_sold": [
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Vendor 5",
+      "email": "vendor5@example.com",
+      "phone": "1112223333",
+      "address": "555 Cedar Street",
+      "product_availablity": "medium",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "2",
+          "name": "Mixed Color Tulips",
+          "price": "15"
+        },
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Vendor 6",
+      "email": "vendor6@example.com",
+      "phone": "4445556666",
+      "address": "222 Maple Avenue",
+      "product_availablity": "high",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Vendor 7",
+      "email": "vendor7@example.com",
+      "phone": "9998887777",
+      "address": "777 Elm Avenue",
+      "product_availablity": "low",
+      "products_sold": [
+        {
+          "id": "2",
+          "name": "Mixed Color Tulips",
+          "price": "15"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Vendor 8",
+      "email": "vendor8@example.com",
+      "phone": "5554443333",
+      "address": "888 Oak Lane",
+      "product_availablity": "medium",
+      "products_sold": [
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Vendor 9",
+      "email": "vendor9@example.com",
+      "phone": "7779998888",
+      "address": "999 Pine Road",
+      "product_availablity": "high",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "4",
+          "name": "Yellow Tulips",
+          "price": "10"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Vendor 10",
+      "email": "vendor10@example.com",
+      "phone": "1112223333",
+      "address": "555 Cedar Street",
+      "product_availablity": "low",
+      "products_sold": [
+        {
+          "id": "1",
+          "name": "Tulip Bouquet",
+          "price": "20"
+        },
+        {
+          "id": "2",
+          "name": "Mixed Color Tulips",
+          "price": "15"
+        },
+        {
+          "id": "3",
+          "name": "Red Tulips",
+          "price": "12"
+        }
+      ]
     }
   ]
 }

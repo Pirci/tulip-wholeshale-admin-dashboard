@@ -26,18 +26,24 @@ interface Product {
 }
 
 export const ProductList = () => {
-  //Lets do not do this
+  //We shall not do this
   // console.log(document.getElementById('#outlined-basic-2').classList.add('my-awasome-class'));
-
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [formValues, setFormValues] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [productsLength, setProductsLength] = useState(0)
   React.useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/products');
+        const response = await fetch(
+          `http://localhost:3001/products?_page=${page}]&_limit=${rowsPerPage}`
+        );
 
         // Check if the content type is JSON before trying to parse it.
         const contentType = response.headers.get('content-type');
+        let total = response.headers.get('X-Total-Count');
+        setProductsLength(Number(total));
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
           setProducts(data);
@@ -50,10 +56,8 @@ export const ProductList = () => {
     };
 
     fetchProducts();
-  }, []); // Empty dependency array ensures this runs once on component mount.
-  const [formValues, setFormValues] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  }, [page, rowsPerPage]); // Empty dependency array ensures this runs once on component mount.
+
   // const [counter, setCounter] = useState(0);
   // const [clicked, setClicked] = useState(true);
   const handleChangePage = (
@@ -115,28 +119,28 @@ export const ProductList = () => {
       <div className={styles.page_header}>List of Products</div>
       <div>
         <TextField
-          id='outlined-basic-2'
-          label='Search'
-          variant='outlined'
+          id="outlined-basic-2"
+          label="Filter"
+          variant="outlined"
           value={formValues}
           onChange={(event: any) => handleChange(event.target.value)}
         />
       </div>
       <div>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Product Name</TableCell>
-                <TableCell align='right'>date</TableCell>
-                <TableCell align='right'>color</TableCell>
-                <TableCell align='right'>price</TableCell>
-                <TableCell align='right'>amount</TableCell>
-                <TableCell align='right'>isStockAvailable</TableCell>
+                <TableCell align="right">date</TableCell>
+                <TableCell align="right">color</TableCell>
+                <TableCell align="right">price</TableCell>
+                <TableCell align="right">amount</TableCell>
+                <TableCell align="right">isStockAvailable</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
+              {(products && rowsPerPage > 0
                 ? products
                     .filter((f) => {
                       if (formValues.length > 2) {
@@ -147,21 +151,21 @@ export const ProductList = () => {
                         return true;
                       }
                     })
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : products
               ).map((row) => (
                 <TableRow
                   key={row.productName}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component='th' scope='row'>
+                  <TableCell component="th" scope="row">
                     {row.productName}
                   </TableCell>
-                  <TableCell align='right'>{row.date}</TableCell>
-                  <TableCell align='right'>{row.color}</TableCell>
-                  <TableCell align='right'>{row.price}</TableCell>
-                  <TableCell align='right'>{row.amount}</TableCell>
-                  <TableCell align='right'>
+                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right">{row.color}</TableCell>
+                  <TableCell align="right">{row.price}</TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
+                  <TableCell align="right">
                     {row.isStockAvailable ? 'Exist' : 'Not Exist'}
                   </TableCell>
                 </TableRow>
@@ -172,7 +176,7 @@ export const ProductList = () => {
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={3}
-                  count={products.length}
+                  count={productsLength}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
