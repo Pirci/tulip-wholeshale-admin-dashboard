@@ -32,14 +32,15 @@ export const ProductList = () => {
   const [formValues, setFormValues] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [productsLength, setProductsLength] = useState(0)
+  const [productsLength, setProductsLength] = useState(0);
   React.useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/products?_page=${page}]&_limit=${rowsPerPage}`
+          `http://localhost:3001/products?_page=${
+            page + 1
+          }]&_limit=${rowsPerPage}`
         );
-
         // Check if the content type is JSON before trying to parse it.
         const contentType = response.headers.get('content-type');
         let total = response.headers.get('X-Total-Count');
@@ -141,19 +142,18 @@ export const ProductList = () => {
             </TableHead>
             <TableBody>
               {(products && rowsPerPage > 0
-                ? products
-                    .filter((f) => {
-                      if (formValues.length > 2) {
-                        return f.productName
-                          .toLowerCase()
-                          .includes(formValues.toLowerCase());
-                      } else {
-                        return true;
-                      }
-                    })
-                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : products
-              ).map((row) => (
+                ? products.filter((f) => {
+                    if (formValues.length > 2) {
+                      return f.productName
+                        .toLowerCase()
+                        .includes(formValues.toLowerCase());
+                    } else {
+                      return true;
+                    }
+                  })
+                : // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  products
+              ).map((row, index) => (
                 <TableRow
                   key={row.productName}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
