@@ -9,45 +9,43 @@ import {
   TextField,
   TableFooter,
   TablePagination,
-  // Button,
 } from '@mui/material';
 import styles from './index.module.scss';
-// import { products } from '../../../constants/products';
 import React, { useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import { ProductSold } from '../../../../src/models/vendors';
 
-interface Product {
-  productName: string;
-  date: string;
-  color: string;
-  price: number;
-  amount: number;
-  isStockAvailable: boolean;
+interface Vendor {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  product_availablity: string;
+  products_sold: Array<ProductSold>;
 }
 
-export const ProductList = () => {
-  //We shall not do this
-  // console.log(document.getElementById('#outlined-basic-2').classList.add('my-awasome-class'));
-  const [products, setProducts] = useState<Product[]>([]);
+export const VendorList = () => {
+  const [vendors, setVendors] = useState<Vendor[]>([]);
   const [formValues, setFormValues] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [productsLength, setProductsLength] = useState(0);
+  const [vendorsLength, setVendorsLength] = useState(0);
+
   React.useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchVendors = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/products?_page=${
+          `http://localhost:3001/vendors?_page=${
             page + 1
           }]&_limit=${rowsPerPage}`
         );
-        // Check if the content type is JSON before trying to parse it.
         const contentType = response.headers.get('content-type');
         let total = response.headers.get('X-Total-Count');
-        setProductsLength(Number(total));
+        setVendorsLength(Number(total));
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
-          setProducts(data);
+          setVendors(data);
         } else {
           console.log('No JSON data');
         }
@@ -56,11 +54,9 @@ export const ProductList = () => {
       }
     };
 
-    fetchProducts();
-  }, [page, rowsPerPage]); // Empty dependency array ensures this runs once on component mount.
+    fetchVendors();
+  }, [page, rowsPerPage]);
 
-  // const [counter, setCounter] = useState(0);
-  // const [clicked, setClicked] = useState(true);
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -80,44 +76,9 @@ export const ProductList = () => {
     setFormValues(formValue);
   };
 
-  // const callMe = (val: string) => {
-  //   return val.toUpperCase();
-  // };
-
-  // const handleButtonClick = () => {
-  //   setClicked((prev) => {
-  //     return !prev;
-  //   });
-  // };
-
-  // Invokes in each rerender
-  // useEffect(() => {
-  //   console.log(callMe('harun'));
-  // });
-
-  // Invokes only first render
-  // useEffect(() => {
-  //   console.log(callMe('harun'));
-  // }, []);
-
-  // Invokes selectively when the state in the array is changed
-  // useEffect(() => {
-  //   console.log(callMe('i am page'));
-  // }, [rowsPerPage]);
-
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCounter((prev) => prev + 1);
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [clicked]);
-
   return (
     <div className={styles.content_container}>
-      <div className={styles.page_header}>List of Products</div>
+      <div className={styles.page_header}>List of Vendors</div>
       <div>
         <TextField
           id='outlined-basic-2'
@@ -132,51 +93,57 @@ export const ProductList = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell>Product Name</TableCell>
-                <TableCell align='right'>Date</TableCell>
-                <TableCell align='right'>Color</TableCell>
-                <TableCell align='right'>Price</TableCell>
-                <TableCell align='right'>Amount</TableCell>
-                <TableCell align='right'>Stock availablity</TableCell>
+                <TableCell>Vendors Name</TableCell>
+                <TableCell align='right'>ID</TableCell>
+                <TableCell align='right'>Email</TableCell>
+                <TableCell align='right'>Phone</TableCell>
+                <TableCell align='right'>Address</TableCell>
+                <TableCell align='right'>Product availablity</TableCell>
+                <TableCell align='right'>Products sold</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {(products && rowsPerPage > 0
-                ? products.filter((f) => {
+              {(vendors && rowsPerPage > 0
+                ? vendors.filter((f) => {
                     if (formValues.length > 2) {
-                      return f.productName
+                      return f.name
                         .toLowerCase()
                         .includes(formValues.toLowerCase());
                     } else {
                       return true;
                     }
                   })
-                : // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  products
+                : vendors
               ).map((row, index) => (
                 <TableRow
-                  key={row.productName}
+                  key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component='th' scope='row'>
-                    {row.productName}
+                    {row.name}
                   </TableCell>
-                  <TableCell align='right'>{row.date}</TableCell>
-                  <TableCell align='right'>{row.color}</TableCell>
-                  <TableCell align='right'>{row.price}</TableCell>
-                  <TableCell align='right'>{row.amount}</TableCell>
+                  <TableCell align='right'>{row.id}</TableCell>
+                  <TableCell align='right'>{row.email}</TableCell>
+                  <TableCell align='right'>{row.phone}</TableCell>
+                  <TableCell align='right'>{row.address}</TableCell>
+                  <TableCell align='right'>{row.product_availablity}</TableCell>
                   <TableCell align='right'>
-                    {row.isStockAvailable ? 'Exist' : 'Not Exist'}
+                    {row.products_sold.map((product: ProductSold) => (
+                      <div key={product.id}>
+                        {product.name} - {product.price}
+                      </div>
+                    ))}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
+
             <TableFooter>
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={3}
-                  count={productsLength}
+                  count={vendorsLength}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
@@ -194,10 +161,6 @@ export const ProductList = () => {
           </Table>
         </TableContainer>
       </div>
-      {/* <Button variant='contained' onClick={handleButtonClick}>
-        click me
-      </Button> */}
-      {/* <p>{counter}</p> */}
     </div>
   );
 };

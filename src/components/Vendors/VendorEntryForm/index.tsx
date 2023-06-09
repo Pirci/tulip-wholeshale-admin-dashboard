@@ -18,11 +18,12 @@ import { colors } from '../../../constants/colors';
 
 interface Props {}
 
-export const TotalSales = (props: Props) => {
+export const VendorEntryForm = (props: Props) => {
+  console.log('dbg-child-2');
   const [first, setfirst] = useState(false);
   const [formValues, setFormValues] = useState({
-    productName: '',
-    productCategory: '',
+    vendorName: '',
+    vendorCategory: '',
     color: '',
     price: '',
     amount: '',
@@ -123,16 +124,16 @@ export const TotalSales = (props: Props) => {
 
   return (
     <div className={styles.content_container}>
-      <div className={styles.page_header}>Total Sales</div>
+      <div className={styles.page_header}>Vendor Entry Form</div>
       <form className={styles.form_container}>
         <div className={styles.form_field}>
           <TextField
             id='outlined-basic-1'
-            label='Product Name'
+            label='Vendor Name'
             variant='outlined'
-            value={formValues.productName}
+            value={formValues.vendorName}
             onChange={(event: any) =>
-              handleChange('productName', event.target.value)
+              handleChange('vendorName', event.target.value)
             }
           />
         </div>
@@ -142,9 +143,9 @@ export const TotalSales = (props: Props) => {
             id='outlined-basic-2'
             label='Category'
             variant='outlined'
-            value={formValues.productCategory}
+            value={formValues.vendorCategory}
             onChange={(event: any) =>
-              handleChange('productCategory', event.target.value)
+              handleChange('vendorCategory', event.target.value)
             }
           />
         </div>
