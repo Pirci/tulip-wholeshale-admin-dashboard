@@ -2,6 +2,7 @@ import {
   TableContainer,
   Paper,
   Table,
+  Button,
   TableHead,
   TableRow,
   TableCell,
@@ -115,29 +116,29 @@ export const ProductList = () => {
   //   };
   // }, [clicked]);
 
+  const handleDeleteClick = () => {
+    console.log('delete');
+  };
+
+  const handleEditClick = () => {
+    console.log('edit');
+  };
+
   return (
     <div className={styles.content_container}>
       <div className={styles.page_header}>List of Products</div>
-      <div>
-        <TextField
-          id='outlined-basic-2'
-          label='Filter'
-          variant='outlined'
-          value={formValues}
-          onChange={(event: any) => handleChange(event.target.value)}
-        />
-      </div>
+
       <div>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Product Name</TableCell>
-                <TableCell align='right'>Date</TableCell>
-                <TableCell align='right'>Color</TableCell>
-                <TableCell align='right'>Price</TableCell>
-                <TableCell align='right'>Amount</TableCell>
-                <TableCell align='right'>Stock availablity</TableCell>
+                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Color</TableCell>
+                <TableCell align="right">Price</TableCell>
+                <TableCell align="right">Amount</TableCell>
+                <TableCell align="right">Stock availablity</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -155,27 +156,31 @@ export const ProductList = () => {
                   products
               ).map((row, index) => (
                 <TableRow
+                  hover
                   key={row.productName}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    cursor: 'pointer',
+                  }}
                 >
-                  <TableCell component='th' scope='row'>
+                  <TableCell component="th" scope="row">
                     {row.productName}
                   </TableCell>
-                  <TableCell align='right'>{row.date}</TableCell>
-                  <TableCell align='right'>{row.color}</TableCell>
-                  <TableCell align='right'>{row.price}</TableCell>
-                  <TableCell align='right'>{row.amount}</TableCell>
-                  <TableCell align='right'>
+                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right">{row.color}</TableCell>
+                  <TableCell align="right">{row.price}</TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
+                  <TableCell align="right">
                     {row.isStockAvailable ? 'Exist' : 'Not Exist'}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow>
+              <TableRow> 
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={3}
+                  colSpan={6}
                   count={productsLength}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -189,6 +194,38 @@ export const ProductList = () => {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   ActionsComponent={TablePaginationActions}
                 />
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div className="p-2 flex flex-row">
+                    <TextField
+                      id="outlined-basic-2"
+                      label="Filter"
+                      variant="outlined"
+                      value={formValues}
+                      onChange={(event: any) =>
+                        handleChange(event.target.value)
+                      }
+                    />
+                    <div className="flex-1 flex justify-end items-center gap-2">
+                      <Button
+                        variant="contained"
+                        color="error"
+                        style={{ minWidth: '120px' }}
+                        onClick={handleDeleteClick}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="contained"
+                        style={{ minWidth: '120px' }}
+                        onClick={handleEditClick}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>
