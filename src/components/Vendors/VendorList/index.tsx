@@ -13,17 +13,17 @@ import {
 import styles from './index.module.scss';
 import React, { useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import { ProductSold } from '../../../../src/models/vendors';
+import { ProductSold, Vendor } from '../../../models/vendor';
 
-interface Vendor {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  product_availablity: string;
-  products_sold: Array<ProductSold>;
-}
+// interface Vendor {
+//   id: string;
+//   name: string;
+//   email: string;
+//   phone: string;
+//   address: string;
+//   product_availablity: string;
+//   products_sold: Array<ProductSold>;
+// }
 
 export const VendorList = () => {
   const [vendors, setVendors] = useState<Vendor[]>([]);

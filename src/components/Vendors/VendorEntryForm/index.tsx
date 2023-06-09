@@ -19,7 +19,6 @@ import { colors } from '../../../constants/colors';
 interface Props {}
 
 export const VendorEntryForm = (props: Props) => {
-  console.log('dbg-child-2');
   const [first, setfirst] = useState(false);
   const [formValues, setFormValues] = useState({
     vendorName: '',
