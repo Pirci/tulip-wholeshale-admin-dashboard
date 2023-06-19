@@ -2,12 +2,10 @@ import {
   TableContainer,
   Paper,
   Table,
-  Button,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
-  TextField,
   TableFooter,
   TablePagination,
   // Button,
@@ -16,6 +14,8 @@ import styles from './index.module.scss';
 // import { products } from '../../../constants/products';
 import React, { useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import TableFilter from '../../shared/TableFilter';
+import TableActions from '../../shared/TableActions';
 
 interface Product {
   productName: string;
@@ -30,7 +30,6 @@ export const ProductList = () => {
   //We shall not do this
   // console.log(document.getElementById('#outlined-basic-2').classList.add('my-awasome-class'));
   const [products, setProducts] = useState<Product[]>([]);
-  const [formValues, setFormValues] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
@@ -59,6 +58,7 @@ export const ProductList = () => {
 
     fetchProducts();
   }, [page, rowsPerPage]); // Empty dependency array ensures this runs once on component mount.
+  const [formValuesParent, setFormValuesParent] = useState('');
 
   // const [counter, setCounter] = useState(0);
   // const [clicked, setClicked] = useState(true);
@@ -74,11 +74,6 @@ export const ProductList = () => {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleChange = (formValue: string) => {
-    console.log(formValue);
-    setFormValues(formValue);
   };
 
   // const callMe = (val: string) => {
@@ -116,14 +111,6 @@ export const ProductList = () => {
   //   };
   // }, [clicked]);
 
-  const handleDeleteClick = () => {
-    console.log('delete');
-  };
-
-  const handleEditClick = () => {
-    console.log('edit');
-  };
-
   return (
     <div className={styles.content_container}>
       <div className={styles.page_header}>List of Products</div>
@@ -144,10 +131,10 @@ export const ProductList = () => {
             <TableBody>
               {(products && rowsPerPage > 0
                 ? products.filter((f) => {
-                    if (formValues.length > 2) {
+                    if (formValuesParent.length > 2) {
                       return f.productName
                         .toLowerCase()
-                        .includes(formValues.toLowerCase());
+                        .includes(formValuesParent.toLowerCase());
                     } else {
                       return true;
                     }
@@ -177,7 +164,7 @@ export const ProductList = () => {
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow> 
+              <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={6}
@@ -198,32 +185,11 @@ export const ProductList = () => {
               <TableRow>
                 <TableCell colSpan={6}>
                   <div className="p-2 flex flex-row">
-                    <TextField
-                      id="outlined-basic-2"
-                      label="Filter"
-                      variant="outlined"
-                      value={formValues}
-                      onChange={(event: any) =>
-                        handleChange(event.target.value)
-                      }
+                    <TableFilter
+                      formValuesChild={formValuesParent}
+                      setFormValuesChild={setFormValuesParent}
                     />
-                    <div className="flex-1 flex justify-end items-center gap-2">
-                      <Button
-                        variant="contained"
-                        color="error"
-                        style={{ minWidth: '120px' }}
-                        onClick={handleDeleteClick}
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        variant="contained"
-                        style={{ minWidth: '120px' }}
-                        onClick={handleEditClick}
-                      >
-                        Edit
-                      </Button>
-                    </div>
+                    <TableActions />
                   </div>
                 </TableCell>
               </TableRow>

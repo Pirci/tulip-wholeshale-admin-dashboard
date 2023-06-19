@@ -5,7 +5,7 @@
 // !Done The first thing is to fetch some data from json server by using fetch api using inside useEffect.
 // !Done Make sure that, the api only called once when the products page opened. We have gone through this in our previous lesson i.e.(how can we call the function inside)
 // !Done useEffect hook once in a lifetime of the component/page.
-// Our second example will be using pagination together with the useEffect hook. As you remember, we have succeeded to perform selective operations among different
+// !DoneOur second example will be using pagination together with the useEffect hook. As you remember, we have succeeded to perform selective operations among different
 // event on the page. So, in this task, you are expected to call the rest api as a result of change in the page number. In each page change, the rest api should be
 // called and 10 new products should be populated.
 // We also need to integrate this with the filtering mechanism. Filterin mechanism should filter the data from json server accoding to provided text. The api call
