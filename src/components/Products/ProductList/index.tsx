@@ -13,7 +13,7 @@ import {
 import { Checkbox } from '@mui/material';
 import styles from './index.module.scss';
 // import { products } from '../../../constants/products';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import TableFilter from '../../shared/TableFilter';
 import TableActions from '../../shared/TableActions';
@@ -35,7 +35,7 @@ export const ProductList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<Product[]>([]);
   // const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   // const handleSelect = (id: number) => {
@@ -47,13 +47,26 @@ export const ProductList = () => {
   // };
 
   const handleSelect = (product: Product) => {
-    if (selected.includes(product.id)) {
-      setSelected(selected.filter((item) => item !== product.id));
+    // Check if the product is already selected
+    const isProductSelected = selected.some(
+      (selectedProduct) => selectedProduct.id === product.id
+    );
+
+    if (isProductSelected) {
+      // Product is already selected, remove it from the array
+      setSelected(
+        selected.filter((selectedProduct) => selectedProduct.id !== product.id)
+      );
     } else {
-      console.log(product.productName); // print the product name here
-      setSelected([...selected, product.id]);
+      // Product is not selected, add it to the array
+      setSelected([...selected, product]);
     }
   };
+
+  useEffect(() => {
+    // Log all the productNames of the selected products
+    console.log(selected.map((selectedProduct) => selectedProduct.productName));
+  }, [selected]); // add selected as a dependency
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -170,7 +183,9 @@ export const ProductList = () => {
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
                     cursor: 'pointer',
-                    backgroundColor: selected.includes(row.id)
+                    backgroundColor: selected.some(
+                      (selectedProduct) => selectedProduct.id === row.id
+                    )
                       ? '#f0f0f0'
                       : 'white',
                   }}
@@ -178,7 +193,11 @@ export const ProductList = () => {
                 >
                   <TableCell padding="checkbox">
                     {' '}
-                    <Checkbox checked={selected.includes(row.id)} />
+                    <Checkbox
+                      checked={selected.some(
+                        (selectedProduct) => selectedProduct.id === row.id
+                      )}
+                    />
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {row.productName}
