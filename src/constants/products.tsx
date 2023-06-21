@@ -2,6 +2,7 @@ import { Product } from '../models/product';
 
 export const products: Product[] = [
   {
+    id: 1,
     productName: 'Red Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-01',
@@ -14,6 +15,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 2,
     productName: 'Blue Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-04-25',
@@ -26,6 +28,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 3,
     productName: 'Yellow Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-04-30',
@@ -38,6 +41,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 4,
     productName: 'Pink Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-02',
@@ -50,6 +54,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 5,
     productName: 'White Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-04-28',
@@ -62,6 +67,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 6,
     productName: 'Red and White Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-03',
@@ -74,6 +80,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 7,
     productName: 'Mixed Color Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-05',
@@ -85,6 +92,7 @@ export const products: Product[] = [
     demandRating: 8,
   },
   {
+    id: 8,
     productName: 'Purple Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-10',
@@ -96,6 +104,7 @@ export const products: Product[] = [
     demandRating: 7,
   },
   {
+    id: 9,
     productName: 'Orange Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-08',
@@ -108,6 +117,7 @@ export const products: Product[] = [
   },
 
   {
+    id: 10,
     productName: 'Black Tulip Bouquet',
     productCategory: 'Flowers',
     date: '2023-05-12',

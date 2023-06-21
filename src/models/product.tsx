@@ -8,6 +8,7 @@ export interface Product {
   vendor: string;
   isStockAvailable: boolean;
   demandRating: number;
+  id: number;
 }
 
 export type Color = 'red' | 'white' | 'pink' | 'blue' | 'yellow';

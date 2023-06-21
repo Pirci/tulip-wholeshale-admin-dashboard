@@ -10,6 +10,7 @@ import {
   TablePagination,
   // Button,
 } from '@mui/material';
+import { Checkbox } from '@mui/material';
 import styles from './index.module.scss';
 // import { products } from '../../../constants/products';
 import React, { useState } from 'react';
@@ -18,6 +19,7 @@ import TableFilter from '../../shared/TableFilter';
 import TableActions from '../../shared/TableActions';
 
 interface Product {
+  id: number;
   productName: string;
   date: string;
   color: string;
@@ -33,6 +35,26 @@ export const ProductList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
+  const [selected, setSelected] = useState<number[]>([]);
+  // const isSelected = (id: number) => selected.indexOf(id) !== -1;
+
+  // const handleSelect = (id: number) => {
+  //   if (selected.includes(id)) {
+  //     setSelected(selected.filter((item) => item !== id));
+  //   } else {
+  //     setSelected([...selected, id]);
+  //   }
+  // };
+
+  const handleSelect = (product: Product) => {
+    if (selected.includes(product.id)) {
+      setSelected(selected.filter((item) => item !== product.id));
+    } else {
+      console.log(product.productName); // print the product name here
+      setSelected([...selected, product.id]);
+    }
+  };
+
   React.useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -144,12 +166,20 @@ export const ProductList = () => {
               ).map((row, index) => (
                 <TableRow
                   hover
-                  key={row.productName}
+                  key={row.id}
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
                     cursor: 'pointer',
+                    backgroundColor: selected.includes(row.id)
+                      ? '#f0f0f0'
+                      : 'white',
                   }}
+                  onClick={() => handleSelect(row)}
                 >
+                  <TableCell padding="checkbox">
+                    {' '}
+                    <Checkbox checked={selected.includes(row.id)} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.productName}
                   </TableCell>
