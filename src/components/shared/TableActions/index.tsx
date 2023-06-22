@@ -1,7 +1,11 @@
 import { Button } from '@mui/material';
+import { Product } from '../../../../src/models/product';
 
-export default function TableActions() {
-    
+interface TableActionsProps {
+  selected: Product[] | [];
+}
+
+const TableActions: React.FC<TableActionsProps> = ({ selected }) => {
   const handleDeleteClick = () => {
     console.log('delete');
   };
@@ -17,6 +21,7 @@ export default function TableActions() {
         color="error"
         style={{ minWidth: '120px' }}
         onClick={handleDeleteClick}
+        disabled={selected.length === 0}
       >
         Delete
       </Button>
@@ -24,9 +29,12 @@ export default function TableActions() {
         variant="contained"
         style={{ minWidth: '120px' }}
         onClick={handleEditClick}
+        disabled={selected.length === 0}
       >
         Edit
       </Button>
     </div>
   );
-}
+};
+
+export default TableActions;

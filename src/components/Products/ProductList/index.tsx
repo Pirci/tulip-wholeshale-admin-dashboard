@@ -8,25 +8,13 @@ import {
   TableBody,
   TableFooter,
   TablePagination,
-  // Button,
 } from '@mui/material';
-import { Checkbox } from '@mui/material';
 import styles from './index.module.scss';
-// import { products } from '../../../constants/products';
 import React, { useEffect, useState } from 'react';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import TableFilter from '../../shared/TableFilter';
 import TableActions from '../../shared/TableActions';
-
-interface Product {
-  id: number;
-  productName: string;
-  date: string;
-  color: string;
-  price: number;
-  amount: number;
-  isStockAvailable: boolean;
-}
+import { Product } from '../../../../src/models/product';
 
 export const ProductList = () => {
   //We shall not do this
@@ -35,38 +23,23 @@ export const ProductList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
-  const [selected, setSelected] = useState<Product[]>([]);
-  // const isSelected = (id: number) => selected.indexOf(id) !== -1;
-
-  // const handleSelect = (id: number) => {
-  //   if (selected.includes(id)) {
-  //     setSelected(selected.filter((item) => item !== id));
-  //   } else {
-  //     setSelected([...selected, id]);
-  //   }
-  // };
+  const [selected, setSelected] = useState<Product[] | []>([]);
 
   const handleSelect = (product: Product) => {
-    // Check if the product is already selected
     const isProductSelected = selected.some(
       (selectedProduct) => selectedProduct.id === product.id
     );
 
     if (isProductSelected) {
-      // Product is already selected, remove it from the array
-      setSelected(
-        selected.filter((selectedProduct) => selectedProduct.id !== product.id)
-      );
+      setSelected([]);
     } else {
-      // Product is not selected, add it to the array
-      setSelected([...selected, product]);
+      setSelected([product]);
     }
   };
 
   useEffect(() => {
-    // Log all the productNames of the selected products
     console.log(selected.map((selectedProduct) => selectedProduct.productName));
-  }, [selected]); // add selected as a dependency
+  }, [selected]);
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -74,9 +47,8 @@ export const ProductList = () => {
         const response = await fetch(
           `http://localhost:3001/products?_page=${
             page + 1
-          }]&_limit=${rowsPerPage}`
+          }&_limit=${rowsPerPage}`
         );
-        // Check if the content type is JSON before trying to parse it.
         const contentType = response.headers.get('content-type');
         let total = response.headers.get('X-Total-Count');
         setProductsLength(Number(total));
@@ -92,11 +64,10 @@ export const ProductList = () => {
     };
 
     fetchProducts();
-  }, [page, rowsPerPage]); // Empty dependency array ensures this runs once on component mount.
+  }, [page, rowsPerPage]);
+
   const [formValuesParent, setFormValuesParent] = useState('');
 
-  // const [counter, setCounter] = useState(0);
-  // const [clicked, setClicked] = useState(true);
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -110,41 +81,6 @@ export const ProductList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // const callMe = (val: string) => {
-  //   return val.toUpperCase();
-  // };
-
-  // const handleButtonClick = () => {
-  //   setClicked((prev) => {
-  //     return !prev;
-  //   });
-  // };
-
-  // Invokes in each rerender
-  // useEffect(() => {
-  //   console.log(callMe('harun'));
-  // });
-
-  // Invokes only first render
-  // useEffect(() => {
-  //   console.log(callMe('harun'));
-  // }, []);
-
-  // Invokes selectively when the state in the array is changed
-  // useEffect(() => {
-  //   console.log(callMe('i am page'));
-  // }, [rowsPerPage]);
-
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCounter((prev) => prev + 1);
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [clicked]);
 
   return (
     <div className={styles.content_container}>
@@ -160,45 +96,33 @@ export const ProductList = () => {
                 <TableCell align="right">Color</TableCell>
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Amount</TableCell>
-                <TableCell align="right">Stock availablity</TableCell>
+                <TableCell align="right">Stock availability</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {(products && rowsPerPage > 0
-                ? products.filter((f) => {
-                    if (formValuesParent.length > 2) {
-                      return f.productName
+              {(
+                products &&
+                (formValuesParent.length > 2
+                  ? products.filter((f) =>
+                      f.productName
                         .toLowerCase()
-                        .includes(formValuesParent.toLowerCase());
-                    } else {
-                      return true;
-                    }
-                  })
-                : // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  products
-              ).map((row, index) => (
+                        .includes(formValuesParent.toLowerCase())
+                    )
+                  : products)
+              ).map((row) => (
                 <TableRow
-                  hover
+                  hover={!selected.length || selected[0].id !== row.id}
                   key={row.id}
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
                     cursor: 'pointer',
-                    backgroundColor: selected.some(
-                      (selectedProduct) => selectedProduct.id === row.id
-                    )
-                      ? '#f0f0f0'
-                      : 'white',
+                    backgroundColor:
+                      selected.length && selected[0].id === row.id
+                        ? 'orange'
+                        : 'white',
                   }}
                   onClick={() => handleSelect(row)}
                 >
-                  <TableCell padding="checkbox">
-                    {' '}
-                    <Checkbox
-                      checked={selected.some(
-                        (selectedProduct) => selectedProduct.id === row.id
-                      )}
-                    />
-                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.productName}
                   </TableCell>
@@ -238,7 +162,7 @@ export const ProductList = () => {
                       formValuesChild={formValuesParent}
                       setFormValuesChild={setFormValuesParent}
                     />
-                    <TableActions />
+                    <TableActions selected={selected} />
                   </div>
                 </TableCell>
               </TableRow>
@@ -246,10 +170,6 @@ export const ProductList = () => {
           </Table>
         </TableContainer>
       </div>
-      {/* <Button variant='contained' onClick={handleButtonClick}>
-        click me
-      </Button> */}
-      {/* <p>{counter}</p> */}
     </div>
   );
 };
