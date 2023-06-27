@@ -7,6 +7,7 @@ import Vendors from './pages/Vendors';
 import Settings from './pages/Settings';
 import Dashboard from './pages/Dashboard';
 import ContentManagement from './pages/Content_Management';
+import ProductEdit from './pages/Edit';
 
 const RouteList = () => {
   return (
@@ -14,6 +15,7 @@ const RouteList = () => {
       <Route path="/" element={<Dashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/products" element={<Products />} />
+      <Route path="/products/edit/:id" element={<ProductEdit />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="/customers" element={<Customers />} />
       <Route path="/vendors" element={<Vendors />} />

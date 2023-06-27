@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { Product } from '../../../../src/models/product';
+import { useNavigate } from 'react-router-dom';
 
 interface TableActionsProps {
   selected: Product[] | [];
@@ -10,13 +11,20 @@ const TableActions: React.FC<TableActionsProps> = ({
   selected,
   deleteRowAfterSelected,
 }) => {
+  const navigate = useNavigate();
+
   const handleDeleteClick = () => {
     console.log('delete');
     deleteRowAfterSelected();
   };
 
   const handleEditClick = () => {
+    if (selected.length === 0) {
+      return;
+    }
+    // Navigate to the product edit page
     console.log('edit');
+    navigate(`/products/edit/${selected[0].id}`);
   };
 
   return (
