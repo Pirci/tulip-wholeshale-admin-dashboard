@@ -3,11 +3,16 @@ import { Product } from '../../../../src/models/product';
 
 interface TableActionsProps {
   selected: Product[] | [];
+  deleteRowAfterSelected: () => void;
 }
 
-const TableActions: React.FC<TableActionsProps> = ({ selected }) => {
+const TableActions: React.FC<TableActionsProps> = ({
+  selected,
+  deleteRowAfterSelected,
+}) => {
   const handleDeleteClick = () => {
     console.log('delete');
+    deleteRowAfterSelected();
   };
 
   const handleEditClick = () => {

@@ -37,6 +37,26 @@ export const ProductList = () => {
     }
   };
 
+  const deleteRowAfterSelected = () => {
+    if (selected.length === 0) {
+      return;
+    }
+
+    // Find the product in products array that is selected
+    const selectedIndex = products.findIndex(
+      (product) => product.id === selected[0].id
+    );
+
+    // If the product is found, delete it from products array
+    if (selectedIndex !== -1) {
+      setProducts((products) => {
+        const newProducts = [...products];
+        newProducts.splice(selectedIndex, 1);
+        return newProducts;
+      });
+    }
+  };
+
   useEffect(() => {
     console.log(selected.map((selectedProduct) => selectedProduct.productName));
   }, [selected]);
@@ -162,7 +182,10 @@ export const ProductList = () => {
                       formValuesChild={formValuesParent}
                       setFormValuesChild={setFormValuesParent}
                     />
-                    <TableActions selected={selected} />
+                    <TableActions
+                      selected={selected}
+                      deleteRowAfterSelected={deleteRowAfterSelected}
+                    />
                   </div>
                 </TableCell>
               </TableRow>
