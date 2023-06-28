@@ -34,6 +34,7 @@ export const ProductList = () => {
       setSelected([]);
     } else {
       setSelected([product]);
+      console.log('Selected product:', product);
     }
   };
 

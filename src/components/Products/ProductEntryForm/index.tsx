@@ -16,20 +16,33 @@ import styles from './index.module.scss';
 import { useState } from 'react';
 import { colors } from '../../../constants/colors';
 
-interface Props {}
+interface Props {
+  initialValues?: {
+    productName: string;
+    productCategory: string;
+    color: string;
+    price: string;
+    amount: string;
+    vendor: string;
+    isStockAvailable: boolean;
+    demandRating: string;
+  };
+}
 
 export const ProductEntryForm = (props: Props) => {
-  const [first, setfirst] = useState(false);
+  const { initialValues } = props;
+
   const [formValues, setFormValues] = useState({
-    productName: '',
-    productCategory: '',
-    color: '',
-    price: '',
-    amount: '',
-    vendor: '',
-    isStockAvailable: false,
-    demandRating: '',
+    productName: initialValues?.productName || '',
+    productCategory: initialValues?.productCategory || '',
+    color: initialValues?.color || '',
+    price: initialValues?.price || '',
+    amount: initialValues?.amount || '',
+    vendor: initialValues?.vendor || '',
+    isStockAvailable: initialValues?.isStockAvailable || false,
+    demandRating: initialValues?.demandRating || '',
   });
+
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
 
@@ -44,13 +57,6 @@ export const ProductEntryForm = (props: Props) => {
       setToastState('error');
     }
     setOpen(true);
-  };
-
-  const handleClickTrial = () => {
-    setfirst((prev) => {
-      console.log(!prev);
-      return !prev;
-    });
   };
 
   const handleRadioChange = (event: any) => {
@@ -127,9 +133,9 @@ export const ProductEntryForm = (props: Props) => {
       <form className={styles.form_container}>
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-1'
-            label='Product Name'
-            variant='outlined'
+            id="outlined-basic-1"
+            label="Product Name"
+            variant="outlined"
             value={formValues.productName}
             onChange={(event: any) =>
               handleChange('productName', event.target.value)
@@ -139,9 +145,9 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-2'
-            label='Category'
-            variant='outlined'
+            id="outlined-basic-2"
+            label="Category"
+            variant="outlined"
             value={formValues.productCategory}
             onChange={(event: any) =>
               handleChange('productCategory', event.target.value)
@@ -151,9 +157,9 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-4'
-            label='Price'
-            variant='outlined'
+            id="outlined-basic-4"
+            label="Price"
+            variant="outlined"
             value={formValues.price}
             onChange={(event) => handleChange('price', event.target.value)}
           />
@@ -161,9 +167,9 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-5'
-            label='Amount'
-            variant='outlined'
+            id="outlined-basic-5"
+            label="Amount"
+            variant="outlined"
             value={formValues.amount}
             onChange={(event) => handleChange('amount', event.target.value)}
           />
@@ -171,9 +177,9 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-6'
-            label='Vendor'
-            variant='outlined'
+            id="outlined-basic-6"
+            label="Vendor"
+            variant="outlined"
             value={formValues.vendor}
             onChange={(event) => handleChange('vendor', event.target.value)}
           />
@@ -181,12 +187,12 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <Stack
-            direction='row'
+            direction="row"
             spacing={1}
-            alignItems='center'
-            justifyContent='center'
+            alignItems="center"
+            justifyContent="center"
           >
-            <Typography>False</Typography>
+            <Typography>Out of stock</Typography>
             <AntSwitch
               checked={formValues.isStockAvailable}
               onChange={(event) =>
@@ -194,15 +200,15 @@ export const ProductEntryForm = (props: Props) => {
               }
               inputProps={{ 'aria-label': 'ant design' }}
             />
-            <Typography>True</Typography>
+            <Typography>In stock</Typography>
           </Stack>
         </div>
 
         <div className={styles.form_field}>
           <TextField
-            id='outlined-basic-8'
-            label='Demand Rating'
-            variant='outlined'
+            id="outlined-basic-8"
+            label="Demand Rating"
+            variant="outlined"
             value={formValues.demandRating}
             onChange={(event) =>
               handleChange('demandRating', event.target.value)
@@ -212,11 +218,11 @@ export const ProductEntryForm = (props: Props) => {
 
         <div className={styles.form_field}>
           <FormControl>
-            <FormLabel id='demo-radio-buttons-group-label'>Colors</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">Colors</FormLabel>
             <RadioGroup
-              aria-labelledby='demo-radio-buttons-group-label'
-              defaultValue='blue'
-              name='radio-buttons-group'
+              aria-labelledby="demo-radio-buttons-group-label"
+              value={formValues.color}
+              name="radio-buttons-group"
               onChange={handleRadioChange}
               className={styles.radio_buttons}
             >
@@ -234,27 +240,24 @@ export const ProductEntryForm = (props: Props) => {
           </FormControl>
         </div>
       </form>
-      <h1>{first}</h1>
 
       <div className={styles.submit_button_container}>
-        <button type='submit' onClick={handleClick}>
+        <button type="submit" onClick={handleClick}>
           Submit
         </button>
-
-        <button onClick={handleClickTrial}>Trial</button>
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {toastState === 'success' ? (
           <Alert
             onClose={handleClose}
-            severity='success'
+            severity="success"
             sx={{ width: '100%' }}
           >
             This is a success message!
           </Alert>
         ) : (
-          <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
             This is a error message!
           </Alert>
         )}
@@ -262,3 +265,5 @@ export const ProductEntryForm = (props: Props) => {
     </div>
   );
 };
+
+export default ProductEntryForm;

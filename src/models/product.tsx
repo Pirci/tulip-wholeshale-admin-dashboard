@@ -11,4 +11,4 @@ export interface Product {
   id: number;
 }
 
-export type Color = 'red' | 'white' | 'pink' | 'blue' | 'yellow';
+export type Color = 'red' | 'white' | 'pink' | 'blue' | 'yellow' | 'black';
