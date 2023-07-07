@@ -12,15 +12,19 @@ import {
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import TableFilter from '../../shared/TableFilter';
 import TableActions from '../../shared/TableActions';
-import { Product } from '../../../../src/models/product';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 
+interface TableCellProps {
+  label: string;
+  value: string;
+}
+
 interface Props {
-  products: Product[];
+  products: any[];
   productsLength: number;
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rows: number) => void;
-  tableLabels: string[];
+  displayedProducts: TableCellProps[];
 }
 
 export default function CustomTable({
@@ -28,14 +32,14 @@ export default function CustomTable({
   productsLength,
   onPageChange,
   onRowsPerPageChange,
-  tableLabels,
+  displayedProducts,
 }: Props) {
   const [formValuesParent, setFormValuesParent] = useState('');
-  const [selected, setSelected] = useState<Product[] | []>([]);
+  const [selected, setSelected] = useState<any[] | []>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleSelect = (product: Product) => {
+  const handleSelect = (product: any) => {
     const isProductSelected = selected.some(
       (selectedProduct) => selectedProduct.id === product.id
     );
@@ -100,10 +104,10 @@ export default function CustomTable({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {tableLabels.map((label, index) => {
+              {displayedProducts.map((cell, index) => {
                 return (
                   <TableCell align={index !== 0 ? 'right' : undefined}>
-                    {label}
+                    {cell.label}
                   </TableCell>
                 );
               })}
@@ -133,16 +137,23 @@ export default function CustomTable({
                 }}
                 onClick={() => handleSelect(row)}
               >
-                <TableCell component="th" scope="row">
-                  {row.productName}
-                </TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.color}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.amount}</TableCell>
-                <TableCell align="right">
-                  {row.isStockAvailable ? 'Exist' : 'Not Exist'}
-                </TableCell>
+                {displayedProducts.map((cell, index) => {
+                  console.log(row);
+
+                  if (typeof row[cell.value] === 'boolean') {
+                    return (
+                      <TableCell align="right">
+                        {row[cell.value] ? 'Exist' : 'Not Exist'}
+                      </TableCell>
+                    );
+                  } else {
+                    return (
+                      <TableCell align={index !== 0 ? 'right' : undefined}>
+                        {row[cell.value]}
+                      </TableCell>
+                    );
+                  }
+                })}
               </TableRow>
             ))}
           </TableBody>

@@ -11,13 +11,13 @@ export const ProductList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
 
-  const productslabel = [
-    'Product Name',
-    'Date',
-    'Color',
-    'Price',
-    'Amount',
-    'Stock availability',
+  const displayedProducts = [
+    {label: 'Product Name', value: 'productName'},
+    {label: 'Date', value: 'date'},
+    {label: 'Color', value: 'color'},
+    {label: 'Price', value: 'price'},
+    {label: 'Amount', value: 'amount'},
+    {label: 'Stock availability', value: 'isStockAvailable'},
   ];
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const ProductList = () => {
         productsLength={productsLength}
         onPageChange={(page) => setPage(page)}
         onRowsPerPageChange={(rows) => setRowsPerPage(rows)}
-        tableLabels={productslabel}
+        displayedProducts={displayedProducts}
       ></CustomTable>
     </div>
   );
