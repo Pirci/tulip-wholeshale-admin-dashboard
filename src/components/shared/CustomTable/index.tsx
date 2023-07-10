@@ -20,35 +20,38 @@ interface TableCellProps {
 }
 
 interface Props {
-  products: any[];
+  records: any[];
   productsLength: number;
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rows: number) => void;
-  displayedProducts: TableCellProps[];
+  onRecordsDelete: (recordId: number) => void;
+  displayedItems: TableCellProps[];
+  tableURLExtension: string;
 }
 
 export default function CustomTable({
-  products,
+  records,
   productsLength,
   onPageChange,
   onRowsPerPageChange,
-  displayedProducts,
+  onRecordsDelete,
+  displayedItems,
+  tableURLExtension,
 }: Props) {
   const [formValuesParent, setFormValuesParent] = useState('');
   const [selected, setSelected] = useState<any[] | []>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleSelect = (product: any) => {
+  const handleSelect = (record: any) => {
     const isProductSelected = selected.some(
-      (selectedProduct) => selectedProduct.id === product.id
+      (selectedProduct) => selectedProduct.id === record.id
     );
 
     if (isProductSelected) {
       setSelected([]);
     } else {
-      setSelected([product]);
-      console.log('Selected product:', product);
+      setSelected([record]);
     }
   };
 
@@ -57,19 +60,21 @@ export default function CustomTable({
       return;
     }
 
-    // Find the product in products array that is selected
-    const selectedIndex = products.findIndex(
-      (product) => product.id === selected[0].id
-    );
+    // Find the item in products array that is selected
+    const selectedItem = records.find((record) => record.id === selected[0].id);
 
-    // If the product is found, delete it from products array
-    // if (selectedIndex !== -1) {
-    //   setProducts((products) => {
-    //     const newProducts = [...products];
-    //     newProducts.splice(selectedIndex, 1);
-    //     return newProducts;
-    //   });
-    // }
+    if (tableURLExtension) {
+      fetch(`http://localhost:3001/${tableURLExtension}/${selectedItem.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      }).then(() => {
+        onRecordsDelete(selectedItem.id);
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
+    }else{
+      alert('No recordId found');
+    }
   };
 
   const handleChangePage = (
@@ -94,19 +99,15 @@ export default function CustomTable({
     onRowsPerPageChange(rowsPerPage);
   }, [onRowsPerPageChange, rowsPerPage]);
 
-  useEffect(() => {
-    console.log(selected.map((selectedProduct) => selectedProduct.productName));
-  }, [selected]);
-
   return (
     <div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {displayedProducts.map((cell, index) => {
+              {displayedItems.map((cell, index) => {
                 return (
-                  <TableCell align={index !== 0 ? 'right' : undefined}>
+                  <TableCell key={cell.value} align={index !== 0 ? 'right' : undefined}>
                     {cell.label}
                   </TableCell>
                 );
@@ -115,14 +116,14 @@ export default function CustomTable({
           </TableHead>
           <TableBody>
             {(
-              products &&
+              records &&
               (formValuesParent.length > 2
-                ? products.filter((f) =>
+                ? records.filter((f) =>
                     f.productName
                       .toLowerCase()
                       .includes(formValuesParent.toLowerCase())
                   )
-                : products)
+                : records)
             ).map((row) => (
               <TableRow
                 hover={!selected.length || selected[0].id !== row.id}
@@ -137,18 +138,16 @@ export default function CustomTable({
                 }}
                 onClick={() => handleSelect(row)}
               >
-                {displayedProducts.map((cell, index) => {
-                  console.log(row);
-
+                {displayedItems.map((cell, index) => {
                   if (typeof row[cell.value] === 'boolean') {
                     return (
-                      <TableCell align="right">
+                      <TableCell key={cell.value} align="right">
                         {row[cell.value] ? 'Exist' : 'Not Exist'}
                       </TableCell>
                     );
                   } else {
                     return (
-                      <TableCell align={index !== 0 ? 'right' : undefined}>
+                      <TableCell key={cell.value} align={index !== 0 ? 'right' : undefined}>
                         {row[cell.value]}
                       </TableCell>
                     );

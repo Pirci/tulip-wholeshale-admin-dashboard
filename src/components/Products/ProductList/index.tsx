@@ -12,12 +12,12 @@ export const ProductList = () => {
   const [productsLength, setProductsLength] = useState(0);
 
   const displayedProducts = [
-    {label: 'Product Name', value: 'productName'},
-    {label: 'Date', value: 'date'},
-    {label: 'Color', value: 'color'},
-    {label: 'Price', value: 'price'},
-    {label: 'Amount', value: 'amount'},
-    {label: 'Stock availability', value: 'isStockAvailable'},
+    { label: 'Product Name', value: 'productName' },
+    { label: 'Date', value: 'date' },
+    { label: 'Color', value: 'color' },
+    { label: 'Price', value: 'price' },
+    { label: 'Amount', value: 'amount' },
+    { label: 'Stock availability', value: 'isStockAvailable' },
   ];
 
   useEffect(() => {
@@ -45,15 +45,27 @@ export const ProductList = () => {
     fetchProducts();
   }, [page, rowsPerPage]);
 
+  const tableUpdateAfterRecordDelete = (recordId: number) => {
+    const updatedProducts = products.filter(
+      (product) => product.id !== recordId
+    );
+    setProducts(updatedProducts);
+    setProductsLength(prev => prev-1);
+  };
+
   return (
     <div className={styles.content_container}>
       <div className={styles.page_header}>List of Products</div>
       <CustomTable
-        products={products}
+        records={products}
+        tableURLExtension={'products'}
         productsLength={productsLength}
         onPageChange={(page) => setPage(page)}
         onRowsPerPageChange={(rows) => setRowsPerPage(rows)}
-        displayedProducts={displayedProducts}
+        onRecordsDelete={(recordId) => {
+          tableUpdateAfterRecordDelete(recordId);
+        }}
+        displayedItems={displayedProducts}
       ></CustomTable>
     </div>
   );
