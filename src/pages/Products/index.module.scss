@@ -1,6 +1,9 @@
 .page_container {
   width: 100%;
-
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 2em 0px;
   .button_container {
     display: flex;
     justify-content: center;

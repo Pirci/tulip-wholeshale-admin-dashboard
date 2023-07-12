@@ -59,7 +59,7 @@ export const ProductList = () => {
       <CustomTable
         records={products}
         tableURLExtension={'products'}
-        productsLength={productsLength}
+        recordsLength={productsLength}
         onPageChange={(page) => setPage(page)}
         onRowsPerPageChange={(rows) => setRowsPerPage(rows)}
         onRecordsDelete={(recordId) => {

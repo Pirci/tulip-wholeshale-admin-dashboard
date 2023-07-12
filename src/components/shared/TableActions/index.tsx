@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 interface TableActionsProps {
   selected: Product[] | [];
   deleteRowAfterSelected: () => void;
+  tableURLExtension: string;
 }
 
 const TableActions: React.FC<TableActionsProps> = ({
   selected,
   deleteRowAfterSelected,
+  tableURLExtension,
 }) => {
   const navigate = useNavigate();
 
@@ -22,9 +24,7 @@ const TableActions: React.FC<TableActionsProps> = ({
     if (selected.length === 0) {
       return;
     }
-    // Navigate to the product edit page
-    console.log('edit');
-    navigate(`/products/edit/${selected[0].id}`);
+    navigate(`/${tableURLExtension}/edit/${selected[0].id}`);
   };
 
   return (

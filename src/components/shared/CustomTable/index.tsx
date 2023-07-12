@@ -21,7 +21,7 @@ interface TableCellProps {
 
 interface Props {
   records: any[];
-  productsLength: number;
+  recordsLength: number;
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rows: number) => void;
   onRecordsDelete: (recordId: number) => void;
@@ -31,7 +31,7 @@ interface Props {
 
 export default function CustomTable({
   records,
-  productsLength,
+  recordsLength,
   onPageChange,
   onRowsPerPageChange,
   onRecordsDelete,
@@ -67,12 +67,14 @@ export default function CustomTable({
       fetch(`http://localhost:3001/${tableURLExtension}/${selectedItem.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-      }).then(() => {
-        onRecordsDelete(selectedItem.id);
-      }).catch((error) => {
-        console.error('Error:', error);
-      });
-    }else{
+      })
+        .then(() => {
+          onRecordsDelete(selectedItem.id);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    } else {
       alert('No recordId found');
     }
   };
@@ -107,8 +109,11 @@ export default function CustomTable({
             <TableRow>
               {displayedItems.map((cell, index) => {
                 return (
-                  <TableCell key={cell.value} align={index !== 0 ? 'right' : undefined}>
-                    {cell.label}
+                  <TableCell
+                    key={cell.value}
+                    align={index !== 0 ? 'right' : undefined}
+                  >
+                    <span className="font-bold text-lg">{cell.label}</span>
                   </TableCell>
                 );
               })}
@@ -147,7 +152,10 @@ export default function CustomTable({
                     );
                   } else {
                     return (
-                      <TableCell key={cell.value} align={index !== 0 ? 'right' : undefined}>
+                      <TableCell
+                        key={cell.value}
+                        align={index !== 0 ? 'right' : undefined}
+                      >
                         {row[cell.value]}
                       </TableCell>
                     );
@@ -161,7 +169,7 @@ export default function CustomTable({
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={6}
-                count={productsLength}
+                count={recordsLength}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -183,6 +191,7 @@ export default function CustomTable({
                     setFormValuesChild={setFormValuesParent}
                   />
                   <TableActions
+                    tableURLExtension={tableURLExtension}
                     selected={selected}
                     deleteRowAfterSelected={deleteRowAfterSelected}
                   />

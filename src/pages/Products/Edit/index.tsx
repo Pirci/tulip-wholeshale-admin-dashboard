@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Product } from '../../models/product';
+import { Product } from '../../../models/product';
 import { CircularProgress } from '@mui/material';
-import ProductEntryForm from '../../components/Products/ProductEntryForm';
+import ProductEntryForm from '../../../components/Products/ProductEntryForm';
 import styles from './index.module.scss';
 
 export default function ProductEdit() {

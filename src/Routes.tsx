@@ -7,7 +7,8 @@ import Vendors from './pages/Vendors';
 import Settings from './pages/Settings';
 import Dashboard from './pages/Dashboard';
 import ContentManagement from './pages/Content_Management';
-import ProductEdit from './pages/Edit';
+import ProductEdit from './pages/Products/Edit';
+import CustomerEdit from './pages/Customers/Edit';
 
 const RouteList = () => {
   return (
@@ -18,6 +19,7 @@ const RouteList = () => {
       <Route path="/products/edit/:id" element={<ProductEdit />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="/customers" element={<Customers />} />
+      <Route path="/customers/edit/:id" element={<CustomerEdit />} />
       <Route path="/vendors" element={<Vendors />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/content" element={<ContentManagement />} />

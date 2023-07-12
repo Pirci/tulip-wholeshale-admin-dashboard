@@ -71,8 +71,9 @@ export default function Products() {
         </button>
       </div>
       {/* <div>{renderContent()}</div> */}
-      <div></div>
-      {activeView === 'list' ? <ProductList /> : <ProductEntryForm />}
+      <div>
+        {activeView === 'list' ? <ProductList /> : <ProductEntryForm />}
+      </div>
     </div>
   );
 }

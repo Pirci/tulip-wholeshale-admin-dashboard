@@ -128,7 +128,7 @@
       "email": "john.doe@example.com",
       "phone": "1234567890",
       "address": "123 Main Street",
-      "level": "Silver"
+      "level": "silver"
     },
     {
       "id": "2",
@@ -136,7 +136,7 @@
       "email": "jane.smith@example.com",
       "phone": "9876543210",
       "address": "456 Elm Avenue",
-      "level": "Gold"
+      "level": "gold"
     },
     {
       "id": "3",
@@ -144,7 +144,7 @@
       "email": "alice.johnson@example.com",
       "phone": "5551234567",
       "address": "789 Oak Lane",
-      "level": "Bronze"
+      "level": "bronze"
     },
     {
       "id": "4",
@@ -152,7 +152,7 @@
       "email": "bob.anderson@example.com",
       "phone": "7778889999",
       "address": "321 Pine Road",
-      "level": "Gold"
+      "level": "gold"
     },
     {
       "id": "5",
@@ -160,7 +160,7 @@
       "email": "emily.wilson@example.com",
       "phone": "1112223333",
       "address": "555 Cedar Street",
-      "level": "Silver"
+      "level": "silver"
     },
     {
       "id": "6",
@@ -168,7 +168,7 @@
       "email": "michael.thompson@example.com",
       "phone": "4445556666",
       "address": "222 Maple Avenue",
-      "level": "Bronze"
+      "level": "bronze"
     },
     {
       "id": "7",
@@ -176,7 +176,7 @@
       "email": "sophia.brown@example.com",
       "phone": "7774441111",
       "address": "777 Oak Lane",
-      "level": "Silver"
+      "level": "silver"
     },
     {
       "id": "8",
@@ -184,7 +184,7 @@
       "email": "oliver.martinez@example.com",
       "phone": "8885552222",
       "address": "666 Pine Road",
-      "level": "Gold"
+      "level": "gold"
     },
     {
       "id": "9",
@@ -192,7 +192,7 @@
       "email": "emma.davis@example.com",
       "phone": "9996663333",
       "address": "999 Cedar Street",
-      "level": "Bronze"
+      "level": "bronze"
     },
     {
       "id": "10",
@@ -200,7 +200,7 @@
       "email": "james.wilson@example.com",
       "phone": "3336669999",
       "address": "111 Maple Avenue",
-      "level": "Gold"
+      "level": "gold"
     },
     {
       "id": "11",
@@ -208,7 +208,7 @@
       "email": "ava.harris@example.com",
       "phone": "7779993333",
       "address": "555 Elm Avenue",
-      "level": "Silver"
+      "level": "silver"
     },
     {
       "id": "12",
@@ -216,7 +216,7 @@
       "email": "noah.taylor@example.com",
       "phone": "8883336666",
       "address": "222 Pine Road",
-      "level": "Bronze"
+      "level": "bronze"
     },
     {
       "id": "13",
@@ -224,7 +224,7 @@
       "email": "isabella.clark@example.com",
       "phone": "5551117777",
       "address": "888 Oak Lane",
-      "level": "Silver"
+      "level": "silver"
     },
     {
       "id": "14",
@@ -232,7 +232,7 @@
       "email": "liam.lewis@example.com",
       "phone": "9998887777",
       "address": "444 Cedar Street",
-      "level": "Gold"
+      "level": "gold"
     },
     {
       "id": "15",
@@ -240,7 +240,7 @@
       "email": "mia.turner@example.com",
       "phone": "6662224444",
       "address": "777 Maple Avenue",
-      "level": "Bronze"
+      "level": "bronze"
     }
   ],
   "vendors": [
