@@ -16,7 +16,7 @@ export default function Content(props: ContentProps) {
     <div className={styles.main_container}>
       <Sidebar onHandleClick={(val) => handleClick(val)} />
       <PageContainer>
-        <RouteList></RouteList>
+        <RouteList />
       </PageContainer>
     </div>
   );

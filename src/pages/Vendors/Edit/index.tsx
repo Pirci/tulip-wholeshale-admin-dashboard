@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import styles from './index.module.scss';
-import { Customer } from '../../../models/customer';
-import CustomerEntryForm from '../../../components/Customers/CustomerEntryForm';
+import { Vendor } from '../../../models/vendor';
+import VendorEntryForm from '../../../components/Vendors/VendorEntryForm';
 
-export default function CustomerEdit() {
+export default function VendorEdit() {
   const { id } = useParams();
-  const [customerData, setCustomerData] = useState<Customer>({} as Customer);
+  const [vendorData, setVendorData] = useState<Vendor>({} as Vendor);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/customers/${id}`)
+    fetch(`http://localhost:3001/vendors/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setTimeout(() => {
-          setCustomerData(data);
+          setVendorData(data);
           setLoading(false);
         }, 2000);
       });
@@ -30,6 +30,6 @@ export default function CustomerEdit() {
       />
     </div>
   ) : (
-    <CustomerEntryForm initialValues={customerData} />
+    <VendorEntryForm initialValues={vendorData} />
   );
 }

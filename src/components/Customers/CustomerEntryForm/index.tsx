@@ -74,7 +74,7 @@ export const CustomerEntryForm = (props: Props) => {
 
   return (
     <div className={styles.content_container}>
-      <div className={styles.page_header}>Product Entry Form</div>
+      <div className={styles.page_header}>Customer Entry Form</div>
       <form className={`${styles.form_container}`}>
         <div className="w-100 flex flex-row gap-4 justify-center">
           <div>
