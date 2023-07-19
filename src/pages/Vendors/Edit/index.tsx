@@ -30,6 +30,6 @@ export default function VendorEdit() {
       />
     </div>
   ) : (
-    <VendorEntryForm initialValues={vendorData} />
+    <VendorEntryForm mode="edit" initialValues={vendorData} />
   );
 }

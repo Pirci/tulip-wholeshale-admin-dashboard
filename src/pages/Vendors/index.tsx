@@ -78,7 +78,7 @@ export default function Vendors() {
       </div>
       {/* <div>{renderContent()}</div> */}
       <div></div>
-      {activeView === 'list' ? <VendorList /> : <VendorEntryForm />}
+      {activeView === 'list' ? <VendorList /> : <VendorEntryForm mode="new" />}
     </div>
   );
 }

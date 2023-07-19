@@ -1,8 +1,10 @@
 import { Alert, Button, Snackbar, TextField } from '@mui/material';
 import styles from './index.module.scss';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
+  mode: 'edit' | 'new';
   initialValues?: {
     name: string;
     email: string;
@@ -20,7 +22,7 @@ export const VendorEntryForm = (props: Props) => {
     phone: initialValues?.phone || '',
     address: initialValues?.address || '',
   });
-
+  const navigate = useNavigate();
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
 
@@ -48,6 +50,10 @@ export const VendorEntryForm = (props: Props) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleBack = () => {
+    navigate('/vendors');
   };
 
   return (
@@ -104,9 +110,22 @@ export const VendorEntryForm = (props: Props) => {
       </form>
 
       <div className={styles.submit_button_container}>
-        <Button variant="contained" onClick={handleClick}>
-          Submit
-        </Button>
+        {props.mode === 'edit' ? (
+          <>
+            <Button variant="contained" onClick={handleBack}>
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleClick}>
+              Edit
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="contained" onClick={handleClick}>
+              Submit
+            </Button>
+          </>
+        )}
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
