@@ -6,7 +6,7 @@ module.exports = {
   },
   plugins: [
     require('postcss-import'),
-    require('postcss-nesting'), // make sure this comes before tailwind
+    require('postcss-nesting'),
     require('tailwindcss'),
     require('autoprefixer'),
   ],
