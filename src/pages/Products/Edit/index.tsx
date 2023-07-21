@@ -39,6 +39,6 @@ export default function ProductEdit() {
       />
     </div>
   ) : (
-    <ProductEntryForm initialValues={productDataWithConverted} />
+    <ProductEntryForm initialValues={productDataWithConverted} mode="edit" />
   );
 }

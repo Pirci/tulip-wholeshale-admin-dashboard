@@ -1,5 +1,6 @@
 import {
   Alert,
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -15,8 +16,10 @@ import {
 import styles from './index.module.scss';
 import { useState } from 'react';
 import { colors } from '../../../constants/colors';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
+  mode: 'edit' | 'new';
   initialValues?: {
     productName: string;
     productCategory: string;
@@ -30,6 +33,7 @@ interface Props {
 }
 
 export const ProductEntryForm = (props: Props) => {
+  const navigate = useNavigate();
   const { initialValues } = props;
 
   const [formValues, setFormValues] = useState({
@@ -126,6 +130,10 @@ export const ProductEntryForm = (props: Props) => {
       boxSizing: 'border-box',
     },
   }));
+
+  const handleBack = () => {
+    navigate('/products');
+  };
 
   return (
     <div className={styles.content_container}>
@@ -242,9 +250,22 @@ export const ProductEntryForm = (props: Props) => {
       </form>
 
       <div className={styles.submit_button_container}>
-        <button type="submit" onClick={handleClick}>
-          Submit
-        </button>
+        {props.mode === 'edit' ? (
+          <>
+            <Button variant="contained" onClick={handleBack}>
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleClick}>
+              Edit
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="contained" onClick={handleClick}>
+              Submit
+            </Button>
+          </>
+        )}
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

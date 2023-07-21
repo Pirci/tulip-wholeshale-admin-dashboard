@@ -64,7 +64,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -92,60 +91,30 @@ interface SideProps {
 export default function Sidebar(props: SideProps) {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
-  const autoHideTimer = React.useRef<NodeJS.Timeout | null>(null);
-  const startAutoHideTimer = () => {
-    if (autoHideTimer.current) {
-      clearTimeout(autoHideTimer.current);
-    }
-    autoHideTimer.current = setTimeout(() => {
-      setOpen(false);
-    }, 3000);
-  };
-
-  const stopAutoHideTimer = () => {
-    if (autoHideTimer.current) {
-      clearTimeout(autoHideTimer.current);
-    }
-  };
 
   const handleClick = (text: string, route: string) => {
     props.onHandleClick(text);
     navigate(route);
   };
 
-  const handleToggleDrawer = () => {
-    setOpen((prev) => {
-      if (!prev) {
-        startAutoHideTimer();
-      }
-      return !prev;
-    });
-  };
-
-  React.useEffect(() => {
-    return () => {
-      stopAutoHideTimer();
-    };
-  }, []);
-
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer
-        variant='permanent'
+        variant="permanent"
         open={open}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
         PaperProps={{
           style: {
             position: 'relative',
             height: '100%',
           },
         }}
-        onMouseEnter={stopAutoHideTimer}
-        onMouseLeave={startAutoHideTimer}
       >
         <DrawerHeader>
           <MdArrowForwardIos
             className={styles.arrow}
-            onClick={handleToggleDrawer}
+            onClick={() => setOpen(!open)}
           >
             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </MdArrowForwardIos>
@@ -153,7 +122,6 @@ export default function Sidebar(props: SideProps) {
         <Divider />
         <List className={styles.main_container}>
           {menuItems.map(({ text, icon, route }) => {
-            // console.log(text);
             return (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton

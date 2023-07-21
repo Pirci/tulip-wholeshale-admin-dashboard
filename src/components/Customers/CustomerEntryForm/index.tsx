@@ -12,8 +12,10 @@ import {
 import styles from './index.module.scss';
 import { useState } from 'react';
 import { levels } from '../../../constants/levels';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
+  mode: 'edit' | 'new';
   initialValues?: {
     name: string;
     email: string;
@@ -24,6 +26,7 @@ interface Props {
 }
 
 export const CustomerEntryForm = (props: Props) => {
+  const navigate = useNavigate();
   const { initialValues } = props;
 
   const [formValues, setFormValues] = useState({
@@ -70,6 +73,10 @@ export const CustomerEntryForm = (props: Props) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleBack = () => {
+    navigate('/customers');
   };
 
   return (
@@ -156,9 +163,22 @@ export const CustomerEntryForm = (props: Props) => {
       </form>
 
       <div className={styles.submit_button_container}>
-        <Button variant="contained" onClick={handleClick}>
-          Submit
-        </Button>
+        {props.mode === 'edit' ? (
+          <>
+            <Button variant="contained" onClick={handleBack}>
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleClick}>
+              Edit
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="contained" onClick={handleClick}>
+              Submit
+            </Button>
+          </>
+        )}
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

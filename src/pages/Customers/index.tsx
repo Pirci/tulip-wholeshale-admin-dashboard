@@ -30,7 +30,11 @@ export default function Customers() {
         </button>
       </div>
       <div>
-        {activeView === 'list' ? <CustomerList /> : <CustomerEntryForm />}
+        {activeView === 'list' ? (
+          <CustomerList />
+        ) : (
+          <CustomerEntryForm mode="new" />
+        )}
       </div>
     </div>
   );

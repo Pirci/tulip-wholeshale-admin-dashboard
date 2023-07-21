@@ -2,6 +2,7 @@ import { Alert, Button, Snackbar, TextField } from '@mui/material';
 import styles from './index.module.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -11,10 +12,11 @@ interface Props {
     phone: string;
     address: string;
   };
+  vendorId?: string;
 }
 
 export const VendorEntryForm = (props: Props) => {
-  const { initialValues } = props;
+  const { initialValues, mode, vendorId } = props;
 
   const [formValues, setFormValues] = useState({
     name: initialValues?.name || '',
@@ -26,11 +28,15 @@ export const VendorEntryForm = (props: Props) => {
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
 
-  const handleClick = (event: any) => {
-    // console.log(event);
+  const handleClick = async (event: any) => {
     event.preventDefault();
     try {
-      console.log(formValues);
+      const url = 'http://localhost:3001/vendors';
+      if (mode === 'edit' && vendorId) {
+        await axios.put(`${url}/${vendorId}`, formValues);
+      } else if (mode === 'new') {
+        await axios.post(url, formValues);
+      }
       setToastState('success');
     } catch (error) {
       console.log(error);
@@ -38,7 +44,6 @@ export const VendorEntryForm = (props: Props) => {
     }
     setOpen(true);
   };
-
   const handleChange = (field: any, value: any) => {
     setFormValues((prev) => {
       return {
@@ -110,22 +115,12 @@ export const VendorEntryForm = (props: Props) => {
       </form>
 
       <div className={styles.submit_button_container}>
-        {props.mode === 'edit' ? (
-          <>
-            <Button variant="contained" onClick={handleBack}>
-              Back
-            </Button>
-            <Button variant="contained" onClick={handleClick}>
-              Edit
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button variant="contained" onClick={handleClick}>
-              Submit
-            </Button>
-          </>
-        )}
+        <Button variant="contained" onClick={handleBack}>
+          Back
+        </Button>
+        <Button variant="contained" onClick={handleClick}>
+          {props.mode === 'edit' ? 'Edit' : 'Submit'}
+        </Button>
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

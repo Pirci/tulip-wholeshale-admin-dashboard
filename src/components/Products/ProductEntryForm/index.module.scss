@@ -123,18 +123,14 @@ input {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  gap: 1em;
 
   button {
-    padding: 20px 250px;
+    padding: 20px 100px;
 
-    @media (max-width: 900px) {
+    @media (min-width: 992px) {
       // Desktop
       padding: 20px 150px;
-    }
-
-    @media (max-width: 600px) {
-      // Tablet
-      padding: 20px 50px;
     }
   }
 }

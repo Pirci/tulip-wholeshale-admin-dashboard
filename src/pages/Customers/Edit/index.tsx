@@ -30,6 +30,6 @@ export default function CustomerEdit() {
       />
     </div>
   ) : (
-    <CustomerEntryForm initialValues={customerData} />
+    <CustomerEntryForm initialValues={customerData} mode="edit" />
   );
 }

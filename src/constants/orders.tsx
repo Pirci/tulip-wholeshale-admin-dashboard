@@ -107,4 +107,20 @@ export const orders: Orders[] = [
     quantity: 1,
     orderStatus: 'Delivered',
   },
+  {
+    orderId: '14',
+    productName: 'Blue and Yellow Tulip Bouquet',
+    customerName: 'Andrew Thomas',
+    orderDate: new Date('2022-10-14'),
+    quantity: 5,
+    orderStatus: 'Processing',
+  },
+  {
+    orderId: '15',
+    productName: 'Mixed Color Tulip Bouquet',
+    customerName: 'Jessica Jackson',
+    orderDate: new Date('2022-10-15'),
+    quantity: 4,
+    orderStatus: 'Shipped',
+  },
 ];
