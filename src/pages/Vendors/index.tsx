@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { VendorList } from '../../components/Vendors/VendorList';
 import { VendorEntryForm } from '../../components/Vendors/VendorEntryForm';
+import { Product } from '../../models/product';
 
 // import React from 'react';
 
@@ -26,6 +27,7 @@ interface Student {
 }
 
 export default function Vendors() {
+  const [productData, setProductData] = useState<Product[]>([] as Product[]);
   // console.log('dbg-parent');
   const [activeView, setActiveView] = useState('list');
   // const renderContent = () => {
@@ -49,6 +51,14 @@ export default function Vendors() {
     newArray[0].age = 33;
     return newArray;
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProductData(data);
+      });
+  }, []);
 
   changeArray1(studens as any);
   changeArray2(studens as any);
@@ -78,7 +88,11 @@ export default function Vendors() {
       </div>
       {/* <div>{renderContent()}</div> */}
       <div></div>
-      {activeView === 'list' ? <VendorList /> : <VendorEntryForm mode="new" />}
+      {activeView === 'list' ? (
+        <VendorList />
+      ) : (
+        <VendorEntryForm mode="new" products={productData} />
+      )}
     </div>
   );
 }

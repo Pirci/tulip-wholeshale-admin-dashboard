@@ -4,10 +4,12 @@ import { CircularProgress } from '@mui/material';
 import styles from './index.module.scss';
 import { Vendor } from '../../../models/vendor';
 import VendorEntryForm from '../../../components/Vendors/VendorEntryForm';
+import { Product } from '../../../models/product';
 
 export default function VendorEdit() {
   const { id } = useParams();
   const [vendorData, setVendorData] = useState<Vendor>({} as Vendor);
+  const [productData, setProductData] = useState<Product[]>([] as Product[]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,6 +23,14 @@ export default function VendorEdit() {
       });
   }, [id]);
 
+  useEffect(() => {
+    fetch(`http://localhost:3001/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProductData(data);
+      });
+  }, []);
+
   return loading ? (
     <div className={styles.page_container}>
       <CircularProgress
@@ -30,6 +40,10 @@ export default function VendorEdit() {
       />
     </div>
   ) : (
-    <VendorEntryForm mode="edit" initialValues={vendorData} />
+    <VendorEntryForm
+      mode="edit"
+      initialValues={vendorData}
+      products={productData}
+    />
   );
 }

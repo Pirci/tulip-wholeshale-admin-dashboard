@@ -1,3 +1,5 @@
+import { Product } from "./product";
+
 export interface Vendor {
   id: string;
   name: string;
@@ -5,11 +7,5 @@ export interface Vendor {
   phone: string;
   address: string;
   product_availablity: 'high' | 'meidum' | 'low';
-  products_sold: ProductSold[];
-}
-
-export interface ProductSold {
-  id: string;
-  name: string;
-  price: string;
+  products_sold: Partial<Product[]>;
 }

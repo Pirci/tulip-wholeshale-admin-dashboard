@@ -1,8 +1,20 @@
-import { Alert, Button, Snackbar, TextField } from '@mui/material';
+import {
+  Alert,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Snackbar,
+  TextField,
+} from '@mui/material';
 import styles from './index.module.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Product } from '../../../models/product';
+import { vendorAvailablity } from '../../../constants/levels';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -11,9 +23,22 @@ interface Props {
     email: string;
     phone: string;
     address: string;
+    product_availablity: string;
+    products_sold: Partial<Product[]>;
   };
+  products: Product[];
   vendorId?: string;
 }
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export const VendorEntryForm = (props: Props) => {
   const { initialValues, mode, vendorId } = props;
@@ -23,6 +48,8 @@ export const VendorEntryForm = (props: Props) => {
     email: initialValues?.email || '',
     phone: initialValues?.phone || '',
     address: initialValues?.address || '',
+    product_availablity: initialValues?.product_availablity || '',
+    products_sold: initialValues?.products_sold || [],
   });
   const navigate = useNavigate();
   const [toastState, setToastState] = useState('success');
@@ -49,6 +76,16 @@ export const VendorEntryForm = (props: Props) => {
       return {
         ...prev,
         [field]: value,
+      };
+    });
+  };
+
+  const handleMultiSelectChange = (event: any) => {
+    console.log(event.target.value);
+    setFormValues((prev) => {
+      return {
+        ...prev,
+        products_sold: event.target.value,
       };
     });
   };
@@ -110,6 +147,56 @@ export const VendorEntryForm = (props: Props) => {
               value={formValues.address}
               onChange={(event) => handleChange('address', event.target.value)}
             />
+          </div>
+        </div>
+
+        <div>
+          <div className={styles.form_field}>
+            {/* Checkout this style EMRE */}
+            <FormControl sx={{ width: 300 }}>
+              <InputLabel id="demo-simple-select-label">
+                Product Availablity
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formValues.product_availablity}
+                label="Age"
+                onChange={(event) =>
+                  handleChange('product_availablity', event.target.value)
+                }
+              >
+                {vendorAvailablity.map((item: any) => {
+                  return (
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className={styles.form_field}>
+            <FormControl sx={{ width: 300 }}>
+              <InputLabel id="demo-multiple-name-label">
+                Product Name
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                multiple
+                value={formValues.products_sold}
+                onChange={handleMultiSelectChange}
+                input={<OutlinedInput label="Product Name" />}
+                MenuProps={MenuProps}
+              >
+                {props.products.map((product: Product) => (
+                  <MenuItem key={product.productName} value={product.id}>
+                    {product.productName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
         </div>
       </form>
