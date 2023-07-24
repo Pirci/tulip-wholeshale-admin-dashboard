@@ -245,7 +245,6 @@
   ],
   "vendors": [
     {
-      "id": "1",
       "name": "Vendor 1",
       "email": "vendor1@example.com",
       "phone": "1234567890",
@@ -253,21 +252,19 @@
       "product_availablity": "high",
       "products_sold": [
         {
-          "id": "1",
-          "name": "Tulip Bouquet",
-          "price": "20"
-        },
-        {
-          "id": "2",
-          "name": "Mixed Color Tulips",
-          "price": "15"
-        },
-        {
-          "id": "3",
-          "name": "Red Tulips",
-          "price": "12"
+          "id": "9",
+          "productName": "Orange Tulip Bouquet",
+          "productCategory": "Flowers",
+          "date": "2023-05-08",
+          "color": "orange",
+          "price": 12.99,
+          "amount": 35,
+          "vendor": "Citrus Blossoms",
+          "isStockAvailable": true,
+          "demandRating": 6
         }
-      ]
+      ],
+      "id": "1"
     },
     {
       "id": "2",

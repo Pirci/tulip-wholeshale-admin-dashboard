@@ -41,7 +41,7 @@ const MenuProps = {
 };
 
 export const VendorEntryForm = (props: Props) => {
-  const { initialValues, mode, vendorId } = props;
+  const { initialValues, mode } = props;
 
   const [formValues, setFormValues] = useState({
     name: initialValues?.name || '',
@@ -49,28 +49,40 @@ export const VendorEntryForm = (props: Props) => {
     phone: initialValues?.phone || '',
     address: initialValues?.address || '',
     product_availablity: initialValues?.product_availablity || '',
-    products_sold: initialValues?.products_sold || [],
+    products_sold: initialValues?.products_sold.map((val: any) => val.id) || [],
   });
   const navigate = useNavigate();
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
 
-  const handleClick = async (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    const newFormValues = {
+      ...formValues,
+      products_sold: props.products.filter((product) => {
+        return formValues.products_sold.includes(product.id);
+      }),
+    };
     try {
       const url = 'http://localhost:3001/vendors';
-      if (mode === 'edit' && vendorId) {
-        await axios.put(`${url}/${vendorId}`, formValues);
+      if (mode === 'edit') {
+        await axios
+          .put(`${url}/${(props.initialValues as any).id}`, newFormValues)
+          .then(() => {
+            setToastState('success');
+          });
       } else if (mode === 'new') {
-        await axios.post(url, formValues);
+        await axios.post(url, formValues).then(() => {
+          setToastState('success');
+        });
       }
-      setToastState('success');
     } catch (error) {
       console.log(error);
       setToastState('error');
     }
     setOpen(true);
   };
+
   const handleChange = (field: any, value: any) => {
     setFormValues((prev) => {
       return {
@@ -81,7 +93,6 @@ export const VendorEntryForm = (props: Props) => {
   };
 
   const handleMultiSelectChange = (event: any) => {
-    console.log(event.target.value);
     setFormValues((prev) => {
       return {
         ...prev,
@@ -161,7 +172,7 @@ export const VendorEntryForm = (props: Props) => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={formValues.product_availablity}
-                label="Age"
+                label="Product Availablity"
                 onChange={(event) =>
                   handleChange('product_availablity', event.target.value)
                 }
@@ -178,16 +189,14 @@ export const VendorEntryForm = (props: Props) => {
           </div>
           <div className={styles.form_field}>
             <FormControl sx={{ width: 300 }}>
-              <InputLabel id="demo-multiple-name-label">
-                Product Name
-              </InputLabel>
+              <InputLabel id="demo-multiple-name-label">Products</InputLabel>
               <Select
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
                 multiple
                 value={formValues.products_sold}
                 onChange={handleMultiSelectChange}
-                input={<OutlinedInput label="Product Name" />}
+                input={<OutlinedInput label="Products" />}
                 MenuProps={MenuProps}
               >
                 {props.products.map((product: Product) => (
@@ -205,7 +214,7 @@ export const VendorEntryForm = (props: Props) => {
         <Button variant="contained" onClick={handleBack}>
           Back
         </Button>
-        <Button variant="contained" onClick={handleClick}>
+        <Button variant="contained" onClick={handleSubmit}>
           {props.mode === 'edit' ? 'Edit' : 'Submit'}
         </Button>
       </div>
