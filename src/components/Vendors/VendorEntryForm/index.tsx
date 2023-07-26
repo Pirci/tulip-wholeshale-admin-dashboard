@@ -211,12 +211,22 @@ export const VendorEntryForm = (props: Props) => {
       </form>
 
       <div className={styles.submit_button_container}>
-        <Button variant="contained" onClick={handleBack}>
-          Back
-        </Button>
-        <Button variant="contained" onClick={handleSubmit}>
-          {props.mode === 'edit' ? 'Edit' : 'Submit'}
-        </Button>
+        {props.mode === 'edit' ? (
+          <>
+            <Button variant="contained" onClick={handleBack}>
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Edit
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="contained" onClick={handleSubmit}>
+              Submit
+            </Button>
+          </>
+        )}
       </div>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
