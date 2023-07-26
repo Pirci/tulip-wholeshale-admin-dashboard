@@ -74,20 +74,25 @@ export const ProductEntryForm = (props: Props) => {
   };
 
   const handleRadioChange = (event: any) => {
-    console.log(event.target.value);
+    const currentDate = new Date().toISOString().split('T')[0];
+
     setFormValues((prev) => {
       return {
         ...prev,
         color: event.target.value,
+        date: currentDate,
       };
     });
   };
 
   const handleChange = (field: any, value: any) => {
+    const currentDate = new Date().toISOString().split('T')[0];
+
     setFormValues((prev) => {
       return {
         ...prev,
         [field]: value,
+        date: currentDate,
       };
     });
   };
