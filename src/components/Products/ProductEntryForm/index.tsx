@@ -17,6 +17,7 @@ import styles from './index.module.scss';
 import { useState } from 'react';
 import { colors } from '../../../constants/colors';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -50,12 +51,21 @@ export const ProductEntryForm = (props: Props) => {
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
 
-  const handleClick = (event: any) => {
-    // console.log(event);
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      console.log(formValues);
-      setToastState('success');
+      const url = 'http://localhost:3001/products'; // Update with your API endpoint
+      if (props.mode === 'edit') {
+        await axios
+          .put(`${url}/${(props.initialValues as any).id}`, formValues)
+          .then(() => {
+            setToastState('success');
+          });
+      } else if (props.mode === 'new') {
+        await axios.post(url, formValues).then(() => {
+          setToastState('success');
+        });
+      }
     } catch (error) {
       console.log(error);
       setToastState('error');
@@ -255,13 +265,13 @@ export const ProductEntryForm = (props: Props) => {
             <Button variant="contained" onClick={handleBack}>
               Back
             </Button>
-            <Button variant="contained" onClick={handleClick}>
+            <Button variant="contained" onClick={handleSubmit}>
               Edit
             </Button>
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleClick}>
+            <Button variant="contained" onClick={handleSubmit}>
               Submit
             </Button>
           </>
