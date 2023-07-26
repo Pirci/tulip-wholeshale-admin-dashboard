@@ -83,20 +83,12 @@ export const VendorEntryForm = (props: Props) => {
     setOpen(true);
   };
 
+  //Good for practice Emre
   const handleChange = (field: any, value: any) => {
     setFormValues((prev) => {
       return {
         ...prev,
         [field]: value,
-      };
-    });
-  };
-
-  const handleMultiSelectChange = (event: any) => {
-    setFormValues((prev) => {
-      return {
-        ...prev,
-        products_sold: event.target.value,
       };
     });
   };
@@ -195,7 +187,9 @@ export const VendorEntryForm = (props: Props) => {
                 id="demo-multiple-name"
                 multiple
                 value={formValues.products_sold}
-                onChange={handleMultiSelectChange}
+                onChange={(event) =>
+                  handleChange('products_sold', event.target.value)
+                }
                 input={<OutlinedInput label="Products" />}
                 MenuProps={MenuProps}
               >
