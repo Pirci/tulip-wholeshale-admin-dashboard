@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import styles from './index.module.scss';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { levels } from '../../../constants/levels';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -29,7 +29,6 @@ interface Props {
 export const CustomerEntryForm = (props: Props) => {
   const navigate = useNavigate();
   const { initialValues } = props;
-
   const [formValues, setFormValues] = useState({
     name: initialValues?.name || '',
     email: initialValues?.email || '',
@@ -37,9 +36,9 @@ export const CustomerEntryForm = (props: Props) => {
     address: initialValues?.address || '',
     level: initialValues?.level || '',
   });
-
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
+  const inputRef = useRef({} as HTMLInputElement);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -90,6 +89,10 @@ export const CustomerEntryForm = (props: Props) => {
     navigate('/customers');
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <div className={styles.content_container}>
       <div className={styles.page_header}>Customer Entry Form</div>
@@ -99,6 +102,7 @@ export const CustomerEntryForm = (props: Props) => {
             <div className={styles.form_field}>
               <TextField
                 id="outlined-basic-1"
+                inputRef={inputRef}
                 label="Customer Name"
                 variant="outlined"
                 value={formValues.name}

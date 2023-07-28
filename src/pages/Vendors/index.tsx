@@ -38,7 +38,7 @@ export default function Vendors() {
           className={activeView === 'form' ? styles.active_button : ''}
           onClick={() => handleClick('form')}
         >
-          Vendor Entry Form
+          Enter Vendor
         </Button>
       </div>
       <div></div>

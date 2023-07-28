@@ -33,6 +33,7 @@ const menuItems = [
   { text: 'Customers', icon: <RiCustomerService2Fill />, route: 'customers' },
   { text: 'Vendors', icon: <GiSellCard />, route: 'vendors' },
   { text: 'Content', icon: <MdContentPasteGo />, route: 'content' },
+  { text: 'Utilities', icon: <AiOutlineSetting />, route: 'utilities' },
   { text: 'Settings', icon: <AiOutlineSetting />, route: 'settings' },
 ];
 

@@ -10,6 +10,7 @@ import ContentManagement from './pages/Content_Management';
 import ProductEdit from './pages/Products/Edit';
 import CustomerEdit from './pages/Customers/Edit';
 import VendorEdit from './pages/Vendors/Edit';
+import Utilities from './pages/Utilities';
 
 const RouteList = () => {
   return (
@@ -25,6 +26,7 @@ const RouteList = () => {
       <Route path="/vendors/edit/:id" element={<VendorEdit />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/content" element={<ContentManagement />} />
+      <Route path="/utilities" element={<Utilities />} />
       <Route element={<NotFound />} />
     </Routes>
   );
