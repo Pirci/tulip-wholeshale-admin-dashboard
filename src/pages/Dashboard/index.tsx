@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import { RecentOrders } from '../../components/Dashboard/RecentOrders';
 import { TotalSales } from '../../components/Dashboard/TotalSales';
 import { BestSellers } from '../../components/Dashboard/BestSellers';
+import { Button } from '@mui/material';
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState('list');
@@ -27,24 +28,27 @@ export default function Dashboard() {
   return (
     <div className={styles.page_container}>
       <div className={styles.button_container}>
-        <button
+        <Button
+          variant="contained"
           className={activeView === 'list' ? styles.active_button : ''}
           onClick={() => handleClick('list')}
         >
           Recent Orders
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
           className={activeView === 'form' ? styles.active_button : ''}
           onClick={() => handleClick('form')}
         >
           Total Sales
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
           className={activeView === 'bestSellers' ? styles.active_button : ''}
           onClick={() => handleClick('bestSellers')}
         >
           Best Sellers
-        </button>
+        </Button>
       </div>
       <div>{renderActiveView()}</div>
     </div>

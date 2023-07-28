@@ -1,12 +1,1 @@
-.page_container {
-  width: 100%;
-
-  .button_container {
-    display: flex;
-    justify-content: center;
-
-    .active_button {
-      background-color: orange;
-    }
-  }
-}
+@import '../Products/index.module.scss';

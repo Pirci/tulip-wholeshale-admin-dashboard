@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './index.module.scss';
 import { ProductList } from '../../components/Products/ProductList';
 import { ProductEntryForm } from '../../components/Products/ProductEntryForm';
+import { Button } from '@mui/material';
 
 const studens = [
   {
@@ -56,19 +57,21 @@ export default function Products() {
   return (
     <div className={styles.page_container}>
       <div className={styles.button_container}>
-        <button
+        <Button
+          variant="contained"
           className={activeView === 'list' ? styles.active_button : ''}
           // onClick={() => setActiveView("list")}
           onClick={() => handleClick('list')}
         >
           List of Products
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
           className={activeView === 'form' ? styles.active_button : ''}
           onClick={() => handleClick('form')}
         >
-          Product Entry Form
-        </button>
+          Enter Product
+        </Button>
       </div>
       {/* <div>{renderContent()}</div> */}
       <div>

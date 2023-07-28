@@ -4,7 +4,12 @@
   .button_container {
     display: flex;
     justify-content: center;
-
+    gap: 1em;
+    padding: 1em 0;
+    button{
+      min-width: 180px;
+      font-weight: bold;
+    }
     .active_button {
       background-color: orange;
     }
