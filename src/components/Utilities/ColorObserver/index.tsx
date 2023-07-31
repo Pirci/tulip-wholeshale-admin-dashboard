@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
+import ColorPickerDialog from '../ColorPickerDialog';
 
 const colorList = [
   { name: 'red', hex: '#ff0000' },
@@ -14,9 +15,20 @@ const colorList = [
 
 export default function ColorObserver() {
   const [color, setColor] = useState('white');
+  const [open, setOpen] = useState(false);
   const colorObserverRef = useRef({} as HTMLDivElement);
+
   const handleColorChange = (color: string) => {
     setColor(color);
+  };
+
+  const handleOpenColorPickerDialog = () => {
+    setOpen(true);
+  };
+
+  const handleAddNewColor = (color: string) => {
+    colorList.push({ name: 'new color', hex: color });
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -27,11 +39,12 @@ export default function ColorObserver() {
 
   return (
     <div className={styles.main_container}>
-      <div className={styles.color_observer_container} ref={colorObserverRef}></div>
+      <div
+        className={styles.color_observer_container}
+        ref={colorObserverRef}
+      ></div>
       <div className={styles.color_picker}>
-        <div className={styles.color_picker_title}>
-          Color Picker
-        </div>
+        <div className={styles.color_picker_title}>Color Picker</div>
         <div className={styles.color_picker_content}>
           {colorList.map((item) => {
             return (
@@ -44,8 +57,20 @@ export default function ColorObserver() {
               </button>
             );
           })}
+          <button
+            className={styles.color_picker_content_item}
+            style={{ backgroundColor: 'grey' }}
+            onClick={() => handleOpenColorPickerDialog()}
+          >
+            Add New Color
+          </button>
         </div>
       </div>
+      <ColorPickerDialog
+        open={open}
+        setOpen={setOpen}
+        onHandleColorChange={handleAddNewColor}
+      />
     </div>
   );
 }
