@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogTitle, TextField } from '@mui/material';
+import { Button, Dialog, DialogTitle, Grid, TextField } from '@mui/material';
 import { useState } from 'react';
 
 export interface SimpleDialogProps {
@@ -30,38 +30,46 @@ export default function ColorPickerDialog(props: SimpleDialogProps) {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Set backup account</DialogTitle>
-      <div>
-        <TextField
-          id="outlined-basic"
-          label="Red"
-          value={rgb.red}
-          variant="outlined"
-          type="number"
-          onChange={(e) => setRgb({ ...rgb, red: parseInt(e.target.value) })}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Blue"
-          value={rgb.blue}
-          variant="outlined"
-          type="number"
-          onChange={(e) => setRgb({ ...rgb, blue: parseInt(e.target.value) })}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Green"
-          value={rgb.green}
-          variant="outlined"
-          type="number"
-          onChange={(e) => setRgb({ ...rgb, green: parseInt(e.target.value) })}
-        />
-      </div>
-      <div>
-        <Button variant="contained" onClick={handleClick}>
-          Add Color
-        </Button>
-      </div>
+      <DialogTitle>Set Color</DialogTitle>
+      <Grid container spacing={2} justifyContent="center" padding={2}>
+        <Grid item xs={12}>
+          <TextField
+            id="outlined-basic-red"
+            label="Red"
+            value={rgb.red}
+            variant="outlined"
+            type="number"
+            onChange={(e) => setRgb({ ...rgb, red: parseInt(e.target.value) })}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="outlined-basic-blue"
+            label="Blue"
+            value={rgb.blue}
+            variant="outlined"
+            type="number"
+            onChange={(e) => setRgb({ ...rgb, blue: parseInt(e.target.value) })}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="outlined-basic-green"
+            label="Green"
+            value={rgb.green}
+            variant="outlined"
+            type="number"
+            onChange={(e) =>
+              setRgb({ ...rgb, green: parseInt(e.target.value) })
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" onClick={handleClick}>
+            Add Color
+          </Button>
+        </Grid>
+      </Grid>
     </Dialog>
   );
 }
