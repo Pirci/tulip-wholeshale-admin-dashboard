@@ -7,6 +7,13 @@ export interface SimpleDialogProps {
   onHandleColorChange: (color: string) => void;
 }
 
+function rgbToHex(red: number, green: number, blue: number) {
+  const redHex = red.toString(16).padStart(2, '0');
+  const greenHex = green.toString(16).padStart(2, '0');
+  const blueHex = blue.toString(16).padStart(2, '0');
+  return `#${redHex}${greenHex}${blueHex}`;
+}
+
 export default function ColorPickerDialog(props: SimpleDialogProps) {
   const { open, setOpen, onHandleColorChange } = props;
   const [rgb, setRgb] = useState({
@@ -16,7 +23,8 @@ export default function ColorPickerDialog(props: SimpleDialogProps) {
   });
 
   const handleClick = () => {
-    onHandleColorChange(`rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`);
+    const hexColor = rgbToHex(rgb.red, rgb.green, rgb.blue);
+    onHandleColorChange(hexColor);
     setOpen(false);
   };
 

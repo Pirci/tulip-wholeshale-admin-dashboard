@@ -17,18 +17,27 @@ export default function ColorObserver() {
   const [color, setColor] = useState('white');
   const [open, setOpen] = useState(false);
   const colorObserverRef = useRef({} as HTMLDivElement);
+  const [selectedColor, setSelectedColor] = useState({
+    name: 'white',
+    hex: '#ffffff',
+  });
 
-  const handleColorChange = (color: string) => {
-    setColor(color);
+  const handleColorChange = (hex: string) => {
+    const color = colorList.find((color) => color.hex === hex);
+    if (color) {
+      setSelectedColor(color);
+    }
+  };
+
+  const handleAddNewColor = (hex: string) => {
+    const newColor = { name: hex, hex };
+    colorList.push(newColor);
+    setSelectedColor(newColor);
+    setOpen(false);
   };
 
   const handleOpenColorPickerDialog = () => {
     setOpen(true);
-  };
-
-  const handleAddNewColor = (color: string) => {
-    colorList.push({ name: 'new color', hex: color });
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -42,6 +51,7 @@ export default function ColorObserver() {
       <div
         className={styles.color_observer_container}
         ref={colorObserverRef}
+        style={{ backgroundColor: selectedColor.hex }}
       ></div>
       <div className={styles.color_picker}>
         <div className={styles.color_picker_title}>Color Picker</div>
