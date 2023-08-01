@@ -9,6 +9,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import ConstructionIcon from '@mui/icons-material/Construction';
 import ListItemText from '@mui/material/ListItemText';
 import styles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +34,7 @@ const menuItems = [
   { text: 'Customers', icon: <RiCustomerService2Fill />, route: 'customers' },
   { text: 'Vendors', icon: <GiSellCard />, route: 'vendors' },
   { text: 'Content', icon: <MdContentPasteGo />, route: 'content' },
-  { text: 'Utilities', icon: <AiOutlineSetting />, route: 'utilities' },
+  { text: 'Utilities', icon: <ConstructionIcon />, route: 'utilities' },
   { text: 'Settings', icon: <AiOutlineSetting />, route: 'settings' },
 ];
 
