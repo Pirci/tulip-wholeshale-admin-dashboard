@@ -463,5 +463,67 @@
       "address": "test",
       "id": "I_G_cSU"
     }
+  ],
+  "colors": [
+    {
+      "id": "#ff0000",
+      "name": "red",
+      "hex": "#ff0000"
+    },
+    {
+      "id": "#00ff00",
+      "name": "green",
+      "hex": "#00ff00"
+    },
+    {
+      "id": "#0000ff",
+      "name": "blue",
+      "hex": "#0000ff"
+    },
+    {
+      "id": "#ffff00",
+      "name": "yellow",
+      "hex": "#ffff00"
+    },
+    {
+      "id": "#00ffff",
+      "name": "cyan",
+      "hex": "#00ffff"
+    },
+    {
+      "id": "#ff00ff",
+      "name": "magenta",
+      "hex": "#ff00ff"
+    },
+    {
+      "id": "#000000",
+      "name": "black",
+      "hex": "#000000"
+    },
+    {
+      "id": "#ffffff",
+      "name": "white",
+      "hex": "#ffffff"
+    },
+    {
+      "id": "#22172b",
+      "name": "#22172b",
+      "hex": "#22172b"
+    },
+    {
+      "id": "#2bea17",
+      "name": "#2bea17",
+      "hex": "#2bea17"
+    },
+    {
+      "id": "#432d4e",
+      "name": "#432d4e",
+      "hex": "#432d4e"
+    },
+    {
+      "id": "#4c2d0c",
+      "name": "#4c2d0c",
+      "hex": "#4c2d0c"
+    }
   ]
 }

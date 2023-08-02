@@ -2,38 +2,58 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import ColorPickerDialog from '../ColorPickerDialog';
 
-const colorList = [
-  { name: 'red', hex: '#ff0000' },
-  { name: 'green', hex: '#00ff00' },
-  { name: 'blue', hex: '#0000ff' },
-  { name: 'yellow', hex: '#ffff00' },
-  { name: 'cyan', hex: '#00ffff' },
-  { name: 'magenta', hex: '#ff00ff' },
-  { name: 'black', hex: '#000000' },
-  { name: 'white', hex: '#ffffff' },
-];
+interface Color {
+  id: string;
+  name: string;
+  hex: string;
+}
 
 export default function ColorObserver() {
-  const [color, setColor] = useState('white');
+  const [colors, setColors] = useState<Color[]>([] as Color[]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const colorObserverRef = useRef({} as HTMLDivElement);
+  const [lastColor, setLastColor] = useState({} as Color);
   const [selectedColor, setSelectedColor] = useState({
+    id: '#ffffff',
     name: 'white',
     hex: '#ffffff',
   });
 
   const handleColorChange = (hex: string) => {
-    const color = colorList.find((color) => color.hex === hex);
+    const color = colors.find((color) => color.hex === hex);
     if (color) {
       setSelectedColor(color);
     }
   };
 
+  useEffect(() => {
+    fetch('http://localhost:3001/colors').then((response) => {
+      response.json().then((data) => {
+        setColors(data);
+        setLoading(false);
+      });
+    });
+  }, [lastColor]);
+
   const handleAddNewColor = (hex: string) => {
-    const newColor = { name: hex, hex };
-    colorList.push(newColor);
-    setSelectedColor(newColor);
-    setOpen(false);
+    const newColor = { id: hex, name: hex, hex: hex };
+    fetch('http://localhost:3001/colors', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newColor),
+    })
+      .then(() => {
+        setLastColor(newColor);
+        setSelectedColor(newColor);
+        setOpen(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setOpen(false);
+      });
   };
 
   const handleOpenColorPickerDialog = () => {
@@ -41,10 +61,10 @@ export default function ColorObserver() {
   };
 
   useEffect(() => {
-    if (color) {
-      colorObserverRef.current.style.backgroundColor = color;
+    if (selectedColor) {
+      colorObserverRef.current.style.backgroundColor = selectedColor.hex;
     }
-  }, [color]);
+  }, [selectedColor]);
 
   return (
     <div className={styles.main_container}>
@@ -56,17 +76,21 @@ export default function ColorObserver() {
       <div className={styles.color_picker}>
         <div className={styles.color_picker_title}>Color Picker</div>
         <div className={styles.color_picker_content}>
-          {colorList.map((item) => {
-            return (
-              <button
-                className={styles.color_picker_content_item}
-                style={{ backgroundColor: item.hex }}
-                onClick={() => handleColorChange(item.hex)}
-              >
-                {item.name}
-              </button>
-            );
-          })}
+          {!loading ? (
+            colors?.map((item) => {
+              return (
+                <button
+                  className={styles.color_picker_content_item}
+                  style={{ backgroundColor: item.hex }}
+                  onClick={() => handleColorChange(item.hex)}
+                >
+                  {item.name}
+                </button>
+              );
+            })
+          ) : (
+            <div>Loading...</div>
+          )}
           <button
             className={styles.color_picker_content_item}
             style={{ backgroundColor: 'grey' }}
