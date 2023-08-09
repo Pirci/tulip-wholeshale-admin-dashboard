@@ -10,6 +10,7 @@ export const CustomerList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [customersLength, setCustomersLength] = useState(0);
 
+  // use memo can be used in here to avoid re-rendering
   const displayedCustomers = [
     { label: 'Id', value: 'id' },
     { label: 'Customer Name', value: 'name' },

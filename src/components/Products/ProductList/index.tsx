@@ -11,6 +11,7 @@ export const ProductList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [productsLength, setProductsLength] = useState(0);
 
+  // use memo can be used in here to avoid re-rendering
   const displayedProducts = [
     { label: 'Product Name', value: 'productName' },
     { label: 'Date', value: 'date' },
