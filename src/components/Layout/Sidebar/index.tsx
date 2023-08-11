@@ -9,34 +9,13 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ConstructionIcon from '@mui/icons-material/Construction';
 import ListItemText from '@mui/material/ListItemText';
 import styles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineDashboard, AiOutlineSetting } from 'react-icons/ai';
-import { BiPurchaseTagAlt } from 'react-icons/bi';
 import {
-  MdOutlineProductionQuantityLimits,
-  MdContentPasteGo,
   MdArrowForwardIos,
 } from 'react-icons/md';
-import { RiCustomerService2Fill } from 'react-icons/ri';
-import { GiSellCard } from 'react-icons/gi';
-
-const menuItems = [
-  { text: 'Dashboard', icon: <AiOutlineDashboard />, route: 'dashboard' },
-  { text: 'Orders', icon: <BiPurchaseTagAlt />, route: 'orders' },
-  {
-    text: 'Products',
-    icon: <MdOutlineProductionQuantityLimits />,
-    route: 'products',
-  },
-  { text: 'Customers', icon: <RiCustomerService2Fill />, route: 'customers' },
-  { text: 'Vendors', icon: <GiSellCard />, route: 'vendors' },
-  { text: 'Content', icon: <MdContentPasteGo />, route: 'content' },
-  { text: 'Utilities', icon: <ConstructionIcon />, route: 'utilities' },
-  { text: 'Settings', icon: <AiOutlineSetting />, route: 'settings' },
-];
+import { menuItems } from '../../../constants/menuItems';
 
 const drawerWidth = 240;
 
