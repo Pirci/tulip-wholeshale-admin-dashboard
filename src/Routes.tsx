@@ -13,7 +13,9 @@ import VendorEdit from './pages/Vendors/Edit';
 import Utilities from './pages/Utilities';
 import ReactHooksPage from './pages/React_Hooks_Page';
 import UseMemo from './components/React_Hooks_Page/UseMemo';
-import HooksListPAge from './components/React_Hooks_Page/HooksListPage';
+import HooksListPage from './components/React_Hooks_Page/HooksListPage';
+import Example1 from './components/React_Hooks_Page/UseMemo/Example1';
+import Example2 from './components/React_Hooks_Page/UseMemo/Example2';
 
 const RouteList = () => {
   return (
@@ -31,11 +33,15 @@ const RouteList = () => {
       <Route path="/content" element={<ContentManagement />} />
       <Route path="/utilities" element={<Utilities />} />
       <Route path="/react-hooks-page" element={<ReactHooksPage />}>
-        <Route path="" element={<HooksListPAge />} />
+        <Route path="" element={<HooksListPage />} />
         <Route path="useState" element={<ReactHooksPage />} />
         <Route path="useEffect" element={<ReactHooksPage />} />
         <Route path="useContext" element={<ReactHooksPage />} />
-        <Route path="useMemo" element={<UseMemo />} />
+        <Route path="useMemo" element={<UseMemo />}>
+          <Route path="Example1" element={<Example1 />} />
+          <Route path="Example2" element={<Example2 />} />
+          <Route path="*" element={<HooksListPage />} />
+        </Route>
         <Route path="useCallback" element={<ReactHooksPage />} />
         <Route path="useRef" element={<ReactHooksPage />} />
       </Route>

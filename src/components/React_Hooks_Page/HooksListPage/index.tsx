@@ -27,7 +27,7 @@ const hookItems = [
     route: 'useRef',
   },
 ];
-export default function HooksListPAge() {
+export default function HooksListPage() {
   const navigate = useNavigate();
   const handleListItemClick = (route: any) => {
     navigate(route);
