@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Product } from '../../../../src/models/product';
 import CustomTable from '../../shared/CustomTable';
 
@@ -12,14 +12,17 @@ export const ProductList = () => {
   const [productsLength, setProductsLength] = useState(0);
 
   // use memo can be used in here to avoid re-rendering
-  const displayedProducts = [
-    { label: 'Product Name', value: 'productName' },
-    { label: 'Date', value: 'date' },
-    { label: 'Color', value: 'color' },
-    { label: 'Price', value: 'price' },
-    { label: 'Amount', value: 'amount' },
-    { label: 'Stock availability', value: 'isStockAvailable' },
-  ];
+  const displayedProducts = useMemo(
+    () => [
+      { label: 'Product Name', value: 'productName' },
+      { label: 'Date', value: 'date' },
+      { label: 'Color', value: 'color' },
+      { label: 'Price', value: 'price' },
+      { label: 'Amount', value: 'amount' },
+      { label: 'Stock availability', value: 'isStockAvailable' },
+    ],
+    []
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,7 +54,7 @@ export const ProductList = () => {
       (product) => product.id !== recordId
     );
     setProducts(updatedProducts);
-    setProductsLength(prev => prev-1);
+    setProductsLength((prev) => prev - 1);
   };
 
   return (

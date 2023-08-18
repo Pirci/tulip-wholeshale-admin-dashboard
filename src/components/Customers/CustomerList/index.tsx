@@ -1,24 +1,26 @@
 import styles from './index.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import CustomTable from '../../shared/CustomTable';
 import { Customer } from '../../../models/customer';
 
 export const CustomerList = () => {
-
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [customersLength, setCustomersLength] = useState(0);
 
   // use memo can be used in here to avoid re-rendering
-  const displayedCustomers = [
-    { label: 'Id', value: 'id' },
-    { label: 'Customer Name', value: 'name' },
-    { label: 'Email', value: 'email' },
-    { label: 'Phone', value: 'phone' },
-    { label: 'Address', value: 'address' },
-    { label: 'Level', value: 'level' },
-  ];
+  const displayedCustomers = useMemo(
+    () => [
+      { label: 'Id', value: 'id' },
+      { label: 'Customer Name', value: 'name' },
+      { label: 'Email', value: 'email' },
+      { label: 'Phone', value: 'phone' },
+      { label: 'Address', value: 'address' },
+      { label: 'Level', value: 'level' },
+    ],
+    []
+  );
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -50,7 +52,7 @@ export const CustomerList = () => {
       (customer) => String(customer.id) !== String(recordId)
     );
     setCustomers(updatedCustomers);
-    setCustomersLength(prev => prev-1);
+    setCustomersLength((prev) => prev - 1);
   };
 
   return (
