@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "ts-node ./src/index.ts",
+    "start": "ts-node ./src/index.ts --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "emre",

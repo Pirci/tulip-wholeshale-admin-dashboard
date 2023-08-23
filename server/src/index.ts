@@ -17,6 +17,19 @@ app.get('/api/customers', (req: Request, res: Response) => {
   }
 });
 
+app.get('/api/customers/:id', (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const customer = customers.find((customer) => customer.id === id);
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+    return res.status(200).json(customer);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
