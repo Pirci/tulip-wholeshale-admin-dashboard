@@ -26,12 +26,12 @@ export const CustomerList = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/customers?_page=${
+          `http://localhost:4000/customers?_page=${
             page + 1
           }&_limit=${rowsPerPage}`
         );
         const contentType = response.headers.get('content-type');
-        let total = response.headers.get('X-Total-Count');
+        const total = response.headers.get('X-Total-Count');
         setCustomersLength(Number(total));
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
