@@ -51,6 +51,10 @@ app.get('/customers/:id', (req: Request, res: Response) => {
   }
 });
 
+// vendors endpoint should be done here, nice to have queries
+
+// products endpoint should be done here, nice to have queries
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
