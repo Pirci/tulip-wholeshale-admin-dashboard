@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm run dev`
 
 Will start both the React app and the json-server at the same time.\
-Open [http://localhost:3000](http://localhost:3000) to view front-end in the browser.
+Open [http://localhost:4200](http://localhost:4200) to view front-end in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.

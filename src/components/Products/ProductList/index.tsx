@@ -28,12 +28,12 @@ export const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/products?_page=${
+          `http://localhost:4000/products?_page=${
             page + 1
           }&_limit=${rowsPerPage}`
         );
         const contentType = response.headers.get('content-type');
-        let total = response.headers.get('X-Total-Count');
+        const total = response.headers.get('X-Total-Count');
         setProductsLength(Number(total));
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
