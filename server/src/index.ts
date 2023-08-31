@@ -5,9 +5,12 @@ import express, { Request, Response } from 'express';
 import { vendors } from './db/vendors';
 import { products } from './db/products';
 import cors from 'cors';
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient("https://rzmzaudwtwnnzgzoxqhb.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6bXphdWR3dHdubnpnem94cWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0OTMxNzEsImV4cCI6MjAwOTA2OTE3MX0.Jiu6tid1sGF-oKkHuTpAbTn1vVLSmoCo_VFpIpPiGXE");
+const supabase = createClient(
+  'https://rzmzaudwtwnnzgzoxqhb.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6bXphdWR3dHdubnpnem94cWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM0OTMxNzEsImV4cCI6MjAwOTA2OTE3MX0.Jiu6tid1sGF-oKkHuTpAbTn1vVLSmoCo_VFpIpPiGXE'
+);
 
 const app = express();
 const allowedOrigins = ['http://localhost:4200'];
@@ -26,15 +29,16 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/customers', async (req: Request, res: Response) => {
   try {
-
     const { data: customers, error } = await supabase
       .from('customers')
-      .select('*')
+      .select('*');
 
     const { _page } = req.query;
     const { _limit } = req.query;
     const page = _page ? parseInt(_page.toString()) : 1;
-    const limit = _limit ? parseInt(_limit.toString()) : (customers ?? []).length;
+    const limit = _limit
+      ? parseInt(_limit.toString())
+      : (customers ?? []).length;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const tempCustomers = (customers ?? []).slice(startIndex, endIndex);
@@ -54,13 +58,30 @@ app.get('/customers/:id', async (req: Request, res: Response) => {
   try {
     const { data: customers, error } = await supabase
       .from('customers')
-      .select('*')
+      .select('*');
     const { id } = req.params;
-    const customer = (customers ?? []).find((customer: any) => customer.id === id);
+    const customer = (customers ?? []).find(
+      (customer: any) => customer.id === id
+    );
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
     }
     return res.status(200).json(customer);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.post('/customers', async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+
+    const { data, error } = await supabase
+      .from('customers')
+      .insert([{ id: new Date().getTime(), ...req.body }])
+      .select();
+
+    return res.status(201).json(data);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -97,8 +118,6 @@ app.get('/vendors/:id', (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-
-
 
 // products endpoint should be done here, nice to have queries
 app.get('/products', (req: Request, res: Response) => {
