@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Request, Response } from 'express';
 // import { customers } from './db/customers';
-import { vendors } from './db/vendors';
-import { products } from './db/products';
+// import { vendors } from './db/vendors';
+// import { products } from './db/products';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
 
@@ -88,68 +88,124 @@ app.post('/customers', async (req: Request, res: Response) => {
 });
 
 // vendors endpoint should be done here, nice to have queries
-app.get('/vendors', (req: Request, res: Response) => {
+app.get('/vendors', async (req: Request, res: Response) => {
   try {
-    const { _page, _limit } = req.query;
+    const { data: vendors, error } = await supabase
+      .from('vendors')
+      .select('*');
+
+    const { _page } = req.query;
+    const { _limit } = req.query;
     const page = _page ? parseInt(_page.toString()) : 1;
-    const limit = _limit ? parseInt(_limit.toString()) : vendors.length;
+    const limit = _limit ? parseInt(_limit.toString()) : (vendors ?? []).length;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const tempVendors = vendors.slice(startIndex, endIndex);
+    const tempVendors = (vendors ?? []).slice(startIndex, endIndex);
+
     res.set({
       'Content-Type': 'application/json',
-      'X-Total-Count': vendors.length.toString(),
+      'X-Total-Count': (vendors ?? []).length.toString(),
     });
+
     return res.status(200).json(tempVendors);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-app.get('/vendors/:id', (req: Request, res: Response) => {
+app.get('/vendors/:id', async (req: Request, res: Response) => {
   try {
+    const { data: vendors, error } = await supabase
+      .from('vendors')
+      .select('*');
     const { id } = req.params;
-    const vendor = vendors.find((vendor) => vendor.id === id);
+    const vendor = (vendors ?? []).find((vendor: any) => vendor.id === id);
+
     if (!vendor) {
       return res.status(404).json({ message: 'Vendor not found' });
     }
+
     return res.status(200).json(vendor);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-// products endpoint should be done here, nice to have queries
-app.get('/products', (req: Request, res: Response) => {
+app.post('/vendors', async (req: Request, res: Response) => {
   try {
-    const { _page, _limit } = req.query;
+    console.log(req.body);
+
+    const { data, error } = await supabase
+      .from('vendors')
+      .insert([{ id: new Date().getTime(), ...req.body }])
+      .select();
+
+    return res.status(201).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+// products endpoint should be done here, nice to have queries
+app.get('/products', async (req: Request, res: Response) => {
+  try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*');
+
+    const { _page } = req.query;
+    const { _limit } = req.query;
     const page = _page ? parseInt(_page.toString()) : 1;
-    const limit = _limit ? parseInt(_limit.toString()) : products.length;
+    const limit = _limit ? parseInt(_limit.toString()) : (products ?? []).length;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const tempProducts = products.slice(startIndex, endIndex);
+    const tempProducts = (products ?? []).slice(startIndex, endIndex);
+
     res.set({
       'Content-Type': 'application/json',
-      'X-Total-Count': products.length.toString(),
+      'X-Total-Count': (products ?? []).length.toString(),
     });
+
     return res.status(200).json(tempProducts);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-app.get('/products/:id', (req: Request, res: Response) => {
+app.get('/products/:id', async (req: Request, res: Response) => {
   try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*');
     const { id } = req.params;
-    const product = products.find((product) => product.id === id);
+    const product = (products ?? []).find((product: any) => product.id === id);
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
     return res.status(200).json(product);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+app.post('/products', async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+
+    const { data, error } = await supabase
+      .from('products')
+      .insert([{ id: new Date().getTime(), ...req.body }])
+      .select();
+
+    return res.status(201).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

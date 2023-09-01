@@ -64,7 +64,7 @@ export const VendorEntryForm = (props: Props) => {
       }),
     };
     try {
-      const url = 'http://localhost:3001/vendors';
+      const url = 'http://localhost:4000/vendors';
       if (mode === 'edit') {
         await axios
           .put(`${url}/${(props.initialValues as any).id}`, newFormValues)

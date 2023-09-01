@@ -54,7 +54,7 @@ export const ProductEntryForm = (props: Props) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      const url = 'http://localhost:3001/products'; // Update with your API endpoint
+      const url = 'http://localhost:4000/products'; // Update with your API endpoint
       if (props.mode === 'edit') {
         await axios
           .put(`${url}/${(props.initialValues as any).id}`, formValues)
