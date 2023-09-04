@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Request, Response } from 'express';
-// import { customers } from './db/customers';
-// import { vendors } from './db/vendors';
-// import { products } from './db/products';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
 
@@ -13,8 +11,9 @@ const supabase = createClient(
 );
 
 const app = express();
+app.use(bodyParser.json());
 const allowedOrigins = ['http://localhost:4200'];
-//Emre buraya bakabilirsin, cors ile ilgili değişiklikler yaptım
+
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins,
   exposedHeaders: ['X-Total-Count'],
@@ -24,7 +23,7 @@ app.use(corsMiddleware);
 const port = 4000;
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  res.send('Hello From Tulip Backend!');
 });
 
 app.get('/customers', async (req: Request, res: Response) => {
@@ -87,12 +86,56 @@ app.post('/customers', async (req: Request, res: Response) => {
   }
 });
 
+app.delete('/customers/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: customers, error } = await supabase
+      .from('customers')
+      .select('*');
+    const { id } = req.params;
+    const customer = (customers ?? []).find(
+      (customer: any) => customer.id === id
+    );
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    await supabase.from('customers').delete().eq('id', id);
+
+    return res.status(204).json({ message: 'Customer deleted' });
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.put('/customers/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: customers, error } = await supabase
+      .from('customers')
+      .select('*');
+    const { id } = req.params;
+    const customer = (customers ?? []).find(
+      (customer: any) => customer.id === id
+    );
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    const { data } = await supabase
+      .from('customers')
+      .update({ ...req.body })
+      .eq('id', id)
+      .select();
+
+    return res.status(204).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 // vendors endpoint should be done here, nice to have queries
 app.get('/vendors', async (req: Request, res: Response) => {
   try {
-    const { data: vendors, error } = await supabase
-      .from('vendors')
-      .select('*');
+    const { data: vendors, error } = await supabase.from('vendors').select('*');
 
     const { _page } = req.query;
     const { _limit } = req.query;
@@ -115,9 +158,7 @@ app.get('/vendors', async (req: Request, res: Response) => {
 
 app.get('/vendors/:id', async (req: Request, res: Response) => {
   try {
-    const { data: vendors, error } = await supabase
-      .from('vendors')
-      .select('*');
+    const { data: vendors, error } = await supabase.from('vendors').select('*');
     const { id } = req.params;
     const vendor = (vendors ?? []).find((vendor: any) => vendor.id === id);
 
@@ -156,7 +197,9 @@ app.get('/products', async (req: Request, res: Response) => {
     const { _page } = req.query;
     const { _limit } = req.query;
     const page = _page ? parseInt(_page.toString()) : 1;
-    const limit = _limit ? parseInt(_limit.toString()) : (products ?? []).length;
+    const limit = _limit
+      ? parseInt(_limit.toString())
+      : (products ?? []).length;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const tempProducts = (products ?? []).slice(startIndex, endIndex);
@@ -204,8 +247,6 @@ app.post('/products', async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

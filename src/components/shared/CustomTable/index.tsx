@@ -13,6 +13,7 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 import TableFilter from '../../shared/TableFilter';
 import TableActions from '../../shared/TableActions';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface TableCellProps {
   label: string;
@@ -64,10 +65,8 @@ export default function CustomTable({
     const selectedItem = records.find((record) => record.id === selected[0].id);
 
     if (tableURLExtension) {
-      fetch(`http://localhost:3001/${tableURLExtension}/${selectedItem.id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      })
+      axios
+        .delete(`http://localhost:4000/${tableURLExtension}/${selectedItem.id}`)
         .then(() => {
           onRecordsDelete(selectedItem.id);
         })

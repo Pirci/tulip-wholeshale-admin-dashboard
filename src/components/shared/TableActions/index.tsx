@@ -16,7 +16,6 @@ const TableActions: React.FC<TableActionsProps> = ({
   const navigate = useNavigate();
 
   const handleDeleteClick = () => {
-    console.log('delete');
     deleteRowAfterSelected();
   };
 

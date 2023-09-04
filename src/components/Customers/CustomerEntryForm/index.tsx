@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import { levels } from '../../../constants/levels';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Customer } from '../../../models/customer';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -25,6 +26,15 @@ interface Props {
     level: string;
   };
 }
+
+const emptyCustomerObject: Customer = {
+  id: '',
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  level: '',
+};
 
 export const CustomerEntryForm = (props: Props) => {
   const navigate = useNavigate();
@@ -53,6 +63,7 @@ export const CustomerEntryForm = (props: Props) => {
       } else if (props.mode === 'new') {
         await axios.post(url, formValues).then(() => {
           setToastState('success');
+          setFormValues(emptyCustomerObject);
         });
       }
     } catch (error) {
