@@ -15,6 +15,7 @@ import { levels } from '../../../constants/levels';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Customer } from '../../../models/customer';
+import CustomDialog from '../../shared/CustomDialog';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -49,6 +50,24 @@ export const CustomerEntryForm = (props: Props) => {
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
   const inputRef = useRef({} as HTMLInputElement);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleDialogOpen = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleDialogConfirm = () => {
+    const fakeEvent = {
+      preventDefault: () => {},
+    };
+    handleSubmit(fakeEvent as any);
+    setIsDialogOpen(false);
+  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -200,9 +219,16 @@ export const CustomerEntryForm = (props: Props) => {
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleSubmit}>
+            <Button variant="contained" onClick={handleDialogOpen}>
               Submit
             </Button>
+            <CustomDialog
+              title="Are you sure?"
+              description="Do you want to proceed with the current action?"
+              open={isDialogOpen}
+              onConfirm={handleDialogConfirm}
+              onCancel={handleDialogClose}
+            />
           </>
         )}
       </div>

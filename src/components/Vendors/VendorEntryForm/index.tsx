@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Product } from '../../../models/product';
 import { vendorAvailablity } from '../../../constants/levels';
+import CustomDialog from '../../shared/CustomDialog';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -54,6 +55,26 @@ export const VendorEntryForm = (props: Props) => {
   const navigate = useNavigate();
   const [toastState, setToastState] = useState('success');
   const [open, setOpen] = useState(false);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleDialogOpen = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleDialogConfirm = () => {
+    // Create a synthetic event object to pass to handleSubmit
+    const fakeEvent = {
+      preventDefault: () => {}, // Empty function for preventing the default action
+      // Add any other properties/methods here if needed
+    };
+    handleSubmit(fakeEvent as any); // We use 'as any' to make TypeScript happy; ideally, you'd use the correct event type.
+    setIsDialogOpen(false);
+  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -224,9 +245,16 @@ export const VendorEntryForm = (props: Props) => {
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleSubmit}>
+            <Button variant="contained" onClick={handleDialogOpen}>
               Submit
             </Button>
+            <CustomDialog
+              title="Are you sure?"
+              description="Do you want to proceed with the current action?"
+              open={isDialogOpen}
+              onConfirm={handleDialogConfirm}
+              onCancel={handleDialogClose}
+            />
           </>
         )}
       </div>
