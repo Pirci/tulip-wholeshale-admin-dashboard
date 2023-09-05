@@ -74,6 +74,14 @@ export const VendorEntryForm = (props: Props) => {
       } else if (mode === 'new') {
         await axios.post(url, formValues).then(() => {
           setToastState('success');
+          setFormValues({
+            name: '',
+            email: '',
+            phone: '',
+            address: '',
+            product_availablity: '',
+            products_sold: [],
+          });
         });
       }
     } catch (error) {

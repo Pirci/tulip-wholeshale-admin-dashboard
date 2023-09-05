@@ -64,6 +64,16 @@ export const ProductEntryForm = (props: Props) => {
       } else if (props.mode === 'new') {
         await axios.post(url, formValues).then(() => {
           setToastState('success');
+          setFormValues({
+            productName: '',
+            productCategory: '',
+            color: '',
+            price: '',
+            amount: '',
+            vendor: '',
+            isStockAvailable: false,
+            demandRating: '',
+          });
         });
       }
     } catch (error) {

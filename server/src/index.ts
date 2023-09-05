@@ -187,6 +187,48 @@ app.post('/vendors', async (req: Request, res: Response) => {
   }
 });
 
+app.delete('/vendors/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: vendors, error } = await supabase
+      .from('vendors')
+      .select('*');
+    const { id } = req.params;
+    const vendor = (vendors ?? []).find(
+      (vendor: any) => vendor.id === id
+    );
+    if (!vendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+    await supabase.from('vendors').delete().eq('id', id);
+    return res.status(204).json({ message: 'Vendor deleted' });
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.put('/vendors/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: vendors, error } = await supabase
+      .from('vendors')
+      .select('*');
+    const { id } = req.params;
+    const vendor = (vendors ?? []).find(
+      (vendor: any) => vendor.id === id
+    );
+    if (!vendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+    const { data } = await supabase
+      .from('vendors')
+      .update({ ...req.body })
+      .eq('id', id)
+      .select();
+    return res.status(204).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 // products endpoint should be done here, nice to have queries
 app.get('/products', async (req: Request, res: Response) => {
   try {
@@ -243,6 +285,48 @@ app.post('/products', async (req: Request, res: Response) => {
       .select();
 
     return res.status(201).json(data);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.delete('/products/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*');
+    const { id } = req.params;
+    const product = (products ?? []).find(
+      (product: any) => product.id === id
+    );
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    await supabase.from('products').delete().eq('id', id);
+    return res.status(204).json({ message: 'Product deleted' });
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.put('/products/:id', async (req: Request, res: Response) => {
+  try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*');
+    const { id } = req.params;
+    const product = (products ?? []).find(
+      (product: any) => product.id === id
+    );
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    const { data } = await supabase
+      .from('products')
+      .update({ ...req.body })
+      .eq('id', id)
+      .select();
+    return res.status(204).json(data);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
