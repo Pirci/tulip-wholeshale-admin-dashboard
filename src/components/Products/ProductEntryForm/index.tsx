@@ -19,6 +19,7 @@ import { colors } from '../../../constants/colors';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CustomDialog from '../../shared/CustomDialog';
+import { DialogStateProps } from '../../Customers/CustomerEntryForm';
 
 interface Props {
   mode: 'edit' | 'new';
@@ -49,12 +50,24 @@ export const ProductEntryForm = (props: Props) => {
     demandRating: initialValues?.demandRating || '',
   });
 
-  const [toastState, setToastState] = useState('success');
-  const [open, setOpen] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    title: '',
+    description: '',
+    onConfirm: async () => {},
+    onCancel: () => {},
+  } as DialogStateProps);
 
+  const [toastState, setToastState] = useState('success');
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleDialogOpen = () => {
+  const handleSubmitDialogOpen = () => {
+    setDialogState({
+      title: 'Submit',
+      description: 'Are you sure you want to submit this item?',
+      onConfirm: handleDialogConfirm as any,
+      onCancel: handleDialogClose,
+    });
     setIsDialogOpen(true);
   };
 
@@ -99,7 +112,8 @@ export const ProductEntryForm = (props: Props) => {
       console.log(error);
       setToastState('error');
     }
-    setOpen(true);
+    setIsSnackbarOpen(true);
+    setIsDialogOpen(false);
   };
 
   const handleRadioChange = (event: any) => {
@@ -126,11 +140,11 @@ export const ProductEntryForm = (props: Props) => {
     });
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
   };
 
-  const AntSwitch = styled(Switch)(({ theme }) => ({
+  const AntSwitch: any = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
     padding: 0,
@@ -247,7 +261,7 @@ export const ProductEntryForm = (props: Props) => {
             <Typography>Out of stock</Typography>
             <AntSwitch
               checked={formValues.isStockAvailable}
-              onChange={(event) =>
+              onChange={(event: any) =>
                 handleChange('isStockAvailable', event.target.checked)
               }
               inputProps={{ 'aria-label': 'ant design' }}
@@ -305,31 +319,38 @@ export const ProductEntryForm = (props: Props) => {
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleDialogOpen}>
+            <Button variant="contained" onClick={handleSubmitDialogOpen}>
               Submit
             </Button>
-            <CustomDialog
-              title="Are you sure?"
-              description="Do you want to proceed with the current action?"
-              open={isDialogOpen}
-              onConfirm={handleDialogConfirm}
-              onCancel={handleDialogClose}
-            />
           </>
         )}
       </div>
-
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <CustomDialog
+        title={dialogState.title}
+        description={dialogState.description}
+        open={isDialogOpen}
+        onConfirm={dialogState.onConfirm}
+        onCancel={dialogState.onCancel}
+      />
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
         {toastState === 'success' ? (
           <Alert
-            onClose={handleClose}
+            onClose={handleSnackbarClose}
             severity="success"
             sx={{ width: '100%' }}
           >
             This is a success message!
           </Alert>
         ) : (
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
             This is a error message!
           </Alert>
         )}

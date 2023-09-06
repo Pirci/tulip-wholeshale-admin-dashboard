@@ -43,7 +43,12 @@ const MenuProps = {
 
 export const VendorEntryForm = (props: Props) => {
   const { initialValues, mode } = props;
-
+  const [dialogState, setDialogState] = useState({
+    title: '',
+    description: '',
+    onConfirm: async () => {},
+    onCancel: () => {},
+  });
   const [formValues, setFormValues] = useState({
     name: initialValues?.name || '',
     email: initialValues?.email || '',
@@ -54,25 +59,21 @@ export const VendorEntryForm = (props: Props) => {
   });
   const navigate = useNavigate();
   const [toastState, setToastState] = useState('success');
-  const [open, setOpen] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleDialogOpen = () => {
+  const handleSubmitDialogOpen = () => {
+    setDialogState({
+      title: 'Confirm Submission!',
+      description: 'Are you sure you want to submit the form?',
+      onConfirm: handleSubmit as any,
+      onCancel: handleDialogClose,
+    });
     setIsDialogOpen(true);
   };
 
   const handleDialogClose = () => {
-    setIsDialogOpen(false);
-  };
-
-  const handleDialogConfirm = () => {
-    // Create a synthetic event object to pass to handleSubmit
-    const fakeEvent = {
-      preventDefault: () => {}, // Empty function for preventing the default action
-      // Add any other properties/methods here if needed
-    };
-    handleSubmit(fakeEvent as any); // We use 'as any' to make TypeScript happy; ideally, you'd use the correct event type.
     setIsDialogOpen(false);
   };
 
@@ -109,10 +110,9 @@ export const VendorEntryForm = (props: Props) => {
       console.log(error);
       setToastState('error');
     }
-    setOpen(true);
+    setIsSnackbarOpen(true);
   };
 
-  //Good for practice Emre
   const handleChange = (field: any, value: any) => {
     setFormValues((prev) => {
       return {
@@ -122,8 +122,8 @@ export const VendorEntryForm = (props: Props) => {
     });
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
   };
 
   const handleBack = () => {
@@ -245,31 +245,38 @@ export const VendorEntryForm = (props: Props) => {
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleDialogOpen}>
+            <Button variant="contained" onClick={handleSubmitDialogOpen}>
               Submit
             </Button>
-            <CustomDialog
-              title="Are you sure?"
-              description="Do you want to proceed with the current action?"
-              open={isDialogOpen}
-              onConfirm={handleDialogConfirm}
-              onCancel={handleDialogClose}
-            />
           </>
         )}
       </div>
-
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <CustomDialog
+        title={dialogState.title}
+        description={dialogState.description}
+        open={isDialogOpen}
+        onConfirm={dialogState.onConfirm}
+        onCancel={dialogState.onCancel}
+      />
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
         {toastState === 'success' ? (
           <Alert
-            onClose={handleClose}
+            onClose={handleSnackbarClose}
             severity="success"
             sx={{ width: '100%' }}
           >
             This is a success message!
           </Alert>
         ) : (
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
             This is a error message!
           </Alert>
         )}

@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import { Product } from '../../../../src/models/product';
 import { useNavigate } from 'react-router-dom';
 import CustomDialog from '../CustomDialog';
+import { DialogStateProps } from '../../Customers/CustomerEntryForm';
 
 interface TableActionsProps {
   selected: Product[] | [];
@@ -18,8 +19,20 @@ const TableActions: React.FC<TableActionsProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    title: '',
+    description: '',
+    onConfirm: () => {},
+    onCancel: () => {},
+  } as DialogStateProps);
 
   const handleDeleteClick = () => {
+    setDialogState({
+      title: 'Delete Operation',
+      description: 'Are you sure you want to delete this item?',
+      onConfirm: handleConfirmDelete,
+      onCancel: handleCloseDialog,
+    });
     setDialogOpen(true);
   };
 
@@ -61,10 +74,10 @@ const TableActions: React.FC<TableActionsProps> = ({
 
       <CustomDialog
         open={isDialogOpen}
-        title="Confirm Deletion"
-        description="Are you sure you want to delete the selected item(s)?"
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCloseDialog}
+        title={dialogState.title}
+        description={dialogState.description}
+        onConfirm={dialogState.onConfirm as any}
+        onCancel={dialogState.onCancel}
       />
     </div>
   );

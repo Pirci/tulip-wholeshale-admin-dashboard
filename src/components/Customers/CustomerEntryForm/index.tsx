@@ -37,6 +37,13 @@ const emptyCustomerObject: Customer = {
   level: '',
 };
 
+export interface DialogStateProps{
+  title: string;
+  description: string;
+  onConfirm: {};
+  onCancel: {};
+}
+
 export const CustomerEntryForm = (props: Props) => {
   const navigate = useNavigate();
   const { initialValues } = props;
@@ -48,24 +55,27 @@ export const CustomerEntryForm = (props: Props) => {
     level: initialValues?.level || '',
   });
   const [toastState, setToastState] = useState('success');
-  const [open, setOpen] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const inputRef = useRef({} as HTMLInputElement);
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    title: '',
+    description: '',
+    onConfirm: {},
+    onCancel: {},
+  } as DialogStateProps);
 
-  const handleDialogOpen = () => {
+  const handleSubmitDialogOpen = () => {
+    setDialogState({
+      title: 'Submit',
+      description: 'Are you sure you want to submit this item?',
+      onConfirm: handleSubmit,
+      onCancel: handleDialogClose,
+    });
     setIsDialogOpen(true);
   };
 
   const handleDialogClose = () => {
-    setIsDialogOpen(false);
-  };
-
-  const handleDialogConfirm = () => {
-    const fakeEvent = {
-      preventDefault: () => {},
-    };
-    handleSubmit(fakeEvent as any);
     setIsDialogOpen(false);
   };
 
@@ -89,7 +99,8 @@ export const CustomerEntryForm = (props: Props) => {
       console.log(error);
       setToastState('error');
     }
-    setOpen(true);
+    setIsSnackbarOpen(true);
+    setIsDialogOpen(false);
   };
 
   const handleRadioChange = (event: any) => {
@@ -111,8 +122,8 @@ export const CustomerEntryForm = (props: Props) => {
     });
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
   };
 
   const handleBack = () => {
@@ -219,31 +230,38 @@ export const CustomerEntryForm = (props: Props) => {
           </>
         ) : (
           <>
-            <Button variant="contained" onClick={handleDialogOpen}>
+            <Button variant="contained" onClick={handleSubmitDialogOpen}>
               Submit
             </Button>
-            <CustomDialog
-              title="Are you sure?"
-              description="Do you want to proceed with the current action?"
-              open={isDialogOpen}
-              onConfirm={handleDialogConfirm}
-              onCancel={handleDialogClose}
-            />
           </>
         )}
       </div>
-
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <CustomDialog
+        title={dialogState.title}
+        description={dialogState.description}
+        open={isDialogOpen}
+        onConfirm={dialogState.onConfirm}
+        onCancel={dialogState.onCancel}
+      />
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
         {toastState === 'success' ? (
           <Alert
-            onClose={handleClose}
+            onClose={handleSnackbarClose}
             severity="success"
             sx={{ width: '100%' }}
           >
             This is a success message!
           </Alert>
         ) : (
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
             This is a error message!
           </Alert>
         )}
