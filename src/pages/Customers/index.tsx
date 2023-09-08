@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import styles from './index.module.scss';
 import { CustomerList } from '../../components/Customers/CustomerList';
 import CustomerEntryForm from '../../components/Customers/CustomerEntryForm';
