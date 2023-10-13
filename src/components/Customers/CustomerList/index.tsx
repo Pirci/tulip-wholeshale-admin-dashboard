@@ -1,14 +1,13 @@
 import styles from './index.module.scss';
-import { useEffect, useState, useMemo, useContext } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import CustomTable from '../../shared/CustomTable';
-import { Customer } from '../../../models/customer';
 import { CustomerContext } from '../../../App';
 
 export const CustomerList = () => {
   // const [customers, setCustomers] = useState<Customer[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [customersLength, setCustomersLength] = useState(0);
+  const [, setCustomersLength] = useState(0);
   const { customers, setCustomers } = useContext(CustomerContext);
 
   // use memo can be used in here to avoid re-rendering
