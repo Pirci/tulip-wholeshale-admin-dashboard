@@ -34,7 +34,7 @@ function reverseInteger(digits) {
     return (copyOfDigits <= Math.pow(2, 31) - 1 && copyOfDigits >= Math.pow(-2, 31)) ? copyOfDigits : 0;
 
 }
-console.log(reverseInteger(123)); // 321
+// console.log(reverseInteger(123)); // 321
 
 // --------------------------------------------------------------------------
 // Palindrome Number
@@ -65,8 +65,64 @@ function swapPairs(list) {
     return modifiedList;
 }
 
-console.log(swapPairs([1, 2, 3, 4, 5])); // [2, 1, 4, 3, 5]
+// console.log(swapPairs([1, 2, 3, 4, 5])); // [2, 1, 4, 3, 5]
 
 // --------------------------------------------------------------------------
-// Implement a function to efficiently find all pairs in an array that sum up to 
-// a specific target value.
+// Implement a function that takes an array of integers and a target value and 
+// returns a pair of elements that their sum is equal to target value.
+
+function twoSum(array, target) {
+    let pairCollection = []
+    for (let i = 0; i < array.length - 1; i++) {
+        for (let j = i + 1; j < array.length; j++) {
+            if (target === array[i] + array[j]) {
+                pairCollection.push([array[i], array[j]]);
+            }
+        }
+    }
+    return pairCollection;
+}
+
+const result = twoSum([1, 2, 3, 4, 5, 6], 9); // [4, 5]
+// console.log(result);
+
+// --------------------------------------------------------------------------
+// Implement a function to find the first missing positive integer in an 
+// unsorted array.
+
+function findMissingPositiveInteger(array) {
+    const positiveIntegers = array.filter(val => val > 0);
+    const sortedArray = positiveIntegers.sort((a, b) => a - b);
+    // for (let num of sortedArray) {
+    //     if (!sortedArray.includes(num + 1) && num < sortedArray[sortedArray.length - 1]) {
+    //         return num + 1;
+    //     }
+    // }
+    for (let i = 0; i < sortedArray.length; i++) {
+        if (!(sortedArray[i + 1] - sortedArray[i] === 1)) {
+            return sortedArray[i] + 1;
+        }
+    }
+    return -1;
+}
+const exampleArray = [3, 6, 1, 2, 7, 8, 11, 10, 9, 5, -1, -2, -3, 0];
+const missingValue = findMissingPositiveInteger(exampleArray);
+// console.log(missingValue);
+
+// --------------------------------------------------------------------------
+//Implement a function to find the top K frequent elements in an array.
+
+function findMostFrequentElement(array) {
+    const uniqueSet = new Set(array);
+    let mostFrequentElement = array[0];
+    for (let num of uniqueSet) {
+        const lengthOfItems = array.filter((val) => val === num).length;
+        if (lengthOfItems > mostFrequentElement) {
+            mostFrequentElement = num
+        }
+    }
+    return mostFrequentElement;
+}
+
+const frequentValue = findMostFrequentElement([1, 1, 2, 5, 2, 2, 5, 6, 7, 4, 4, 2, 3, 2, 2, 1]);
+console.log(frequentValue);
