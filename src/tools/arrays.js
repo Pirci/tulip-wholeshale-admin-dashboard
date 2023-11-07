@@ -126,3 +126,19 @@ function findMostFrequentElement(array) {
 
 const frequentValue = findMostFrequentElement([1, 1, 2, 5, 2, 2, 5, 6, 7, 4, 4, 2, 3, 2, 2, 1]);
 console.log(frequentValue);
+
+// --------------------------------------------------------------------------
+//Implement a function to find the top K frequent elements in an array. 
+
+
+// --------------------------------------------------------------------------
+// Implement a function to perform an in-place shuffle of an array so that no element 
+// appears in its original position.
+
+
+// --------------------------------------------------------------------------
+// Implement a function to find the maximum product of any three integers in an array.
+
+
+// --------------------------------------------------------------------------
+//   Implement a function to flatten a nested array in JavaScript.
